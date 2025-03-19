@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Blue */
+    --color-B50: hsl(213, 100%, 93%); /* hex color : #dbebff */
+    --color-B75: hsl(214, 100%, 85%); /* hex color : #B3D4FF */
+    --color-B100: hsl(214, 100%, 65%); /* hex color : #4C9AFF */
+    --color-B200: hsl(214, 100%, 57%); /* hex color : #2684FF */
+    --color-B300: hsl(216, 100%, 50%); /* hex color : #0065FF */
+    --color-B400: hsl(216, 100%, 40%); /* hex color : #0052CC */
+    --color-B500: hsl(216, 92%, 34%); /* hex color : #0747A6 */
+
+    /* Red */
+    --color-R50: hsl(12, 100%, 95%); /* hex color : #FFEBE6 */
+    --color-R75: hsl(12, 100%, 84%); /* hex color : #FFBDAD */
+    --color-R100: hsl(12, 100%, 73%); /* hex color : #FF8F73 */
+    --color-R200: hsl(12, 100%, 66%); /* hex color : #FF7452 */
+    --color-R300: hsl(11, 100%, 59%); /* hex color : #FF5630 */
+    --color-R400: hsl(12, 91%, 46%); /* hex color : #DE350B */
+    --color-R500: hsl(12, 100%, 36%); /* hex color : #B92500 */
+
+    /* Yellow */
+    --color-Y50: hsl(48, 100%, 95%); /* hex color : #FFFAE6 */
+    --color-Y75: hsl(48, 100%, 85%); /* hex color : #FFF0B3 */
+    --color-Y100: hsl(47, 100%, 75%); /* hex color : #FFE380 */
+    --color-Y200: hsl(46, 100%, 50%); /* hex color : #FFC400 */
+    --color-Y300: hsl(40, 100%, 50%); /* hex color : #FFAB00 */
+    --color-Y400: hsl(33, 100%, 56%); /* hex color : #FF991F */
+    --color-Y500: hsl(33, 100%, 50%); /* hex color : #FF8B00 */
+
+    /* Green */
+    --color-G50: hsl(149, 81%, 94%); /* hex color : #E3FCEF */
+    --color-G75: hsl(151, 79%, 82%); /* hex color : #ABF5D1 */
+    --color-G100: hsl(155, 82%, 71%); /* hex color : #79F2C0 */
+    --color-G200: hsl(155, 63%, 60%); /* hex color : #57D9A3 */
+    --color-G300: hsl(155, 54%, 46%); /* hex color : #36B37E */
+    --color-G400: hsl(160, 100%, 26%); /* hex color : #00875A */
+    --color-G500: hsl(160, 100%, 20%); /* hex color : #006644 */
+
+    /* Purple */
+    --color-P50: hsl(250, 100%, 95%); /* hex color : #EAE6FF */
+    --color-P75: hsl(250, 70%, 83%); /* hex color : #C0B6F2 */
+    --color-P100: hsl(249, 50%, 70%); /* hex color : #998DD9 */
+    --color-P200: hsl(250, 56%, 66%); /* hex color : #8777D9 */
+    --color-P300: hsl(249, 46%, 54%); /*hex color: #6554C0 */
+    --color-P400: hsl(249, 43%, 46%); /* hex color : #5243AA */
+    --color-P500: hsl(249, 49%, 39%); /* hex color : #403294 */
+
+    /* Teal */
+    --color-T50: hsl(187, 100%, 95%); /* hex color : #E6FCFF */
+    --color-T75: hsl(188, 100%, 85%); /* hex color : #B3F5FF */
+    --color-T100: hsl(188, 82%, 71%); /* hex color : #79E2F2 */
+    --color-T200: hsl(188, 100%, 45%); /* hex color : #00C7E6 */
+    --color-T300: hsl(189, 100%, 43%); /* hex color : #00B8D9 */
+    --color-T400: hsl(189, 100%, 37%); /* hex color : #00A3BF */
+    --color-T500: hsl(189, 100%, 33%); /* hex color : #008DA6 */
+
+    /* Neutral (Light) */
+    --color-N0: hsl(0, 0%, 100%); /* hex color : #FFFFFF */
+    --color-N10: hsl(210, 40%, 98%); /* hex color : #FAFBFC*/
+    --color-N20: hsl(220, 16%, 96%); /* hex color : #F4F5F7 */
+    --color-N30: hsl(228, 14%, 93%); /* hex color : #EBECF0 */
+    --color-N40: hsl(223, 12%, 89%); /* hex color : #DFE1E6 */
+    --color-N50: hsl(216, 14%, 79%); /* hex color : #C1C7D0 */
+
+    /* Neutral (Mid) */
+    --color-N60: hsl(217, 13%, 74%); /* hex color : #B3BAC5 */
+    --color-N70: hsl(217, 13%, 69%); /* hex color : #A5ADBA */
+    --color-N80: hsl(218, 13%, 64%); /* hex color : #97A0AF */
+    --color-N90: hsl(218, 13%, 59%); /* hex color : #8993A4 */
+    --color-N100: hsl(218, 14%, 54%); /* hex color : #7A869A */
+    --color-N200: hsl(218, 13%, 48%); /* hex color : #6B778C */
+    --color-N300: hsl(218, 17%, 44%); /* hex color : #5E6C84 */
+    --color-N400: hsl(218, 20%, 39%); /* hex color : #505F79 */
+
+    /* Neutral (Dark) */
+    --color-N500: hsl(218, 25%, 35%); /* hex color : #42526E */
+    --color-N600: hsl(218, 31%, 30%); /* hex color : #344563 */
+    --color-N700: hsl(218, 41%, 25%); /* hex color : #253858 */
+    --color-N800: hsl(218, 54%, 20%); /* hex color : #172B4D */
+    --color-N900: hsl(217, 81%, 12%); /* hex color : #061938 */
+
+    /*Text colors*/
+    --color-text-default: hsl(218, 76%, 15%); /* hex color : #091E42 */
+    --color-text-light: hsl(218, 31%, 30%); /* hex color :  */
+
+    /* toggle button styles  */
+
+    --ds-background-success-bold: hsl(216, 100%, 40%) !important;
+    --icon-primary-color: hsl(216, 100%, 40%) !important;
+  }
+}
+
+/** Used to define container behavior: width, position: fixed etc... **/
+.Toastify__toast-container {
+  border-radius: 8px;
+  min-width: 450px !important;
+  background: transparent !important;
+
+  z-index: 1000000000 !important;
+}
+
+.Toastify__toast {
+  width: 100%;
+  padding: 16px !important;
+  /* height: 94px; */
+  margin-bottom: 0px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.08);
+  background-color: var(--color-N0) !important;
+}
+
+.Toastify__toast.Toastify__toast--error {
+  background-color: #fef6f6 !important;
+}
+
+.Toastify__toast.Toastify__toast--success {
+  background-color: #f4fbf7 !important;
+}
+.Toastify__toast.Toastify__toast--info {
+  background-color: var(--color-N0) !important;
+}
+
+.Toastify__toast-body {
+  gap: 24px;
+  padding: 8px !important;
+  width: calc(100% - 24px);
+}
+
+.Toastify__toast-icon {
+  width: 28px !important;
+  height: 28px;
+  -webkit-margin-end: 0px !important;
+  margin-inline-end: 0px !important;
+}
+
+.container {
+  max-width: 1128px;
+}
