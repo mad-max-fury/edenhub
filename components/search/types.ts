@@ -2,12 +2,12 @@ import { ChangeEvent, ChangeEventHandler, FormEvent } from "react";
 
 export type OnSubmitType = (
   event: FormEvent<HTMLFormElement>,
-  searchTerm: string,
+  searchTerm: string
 ) => void;
 
 export type OnChangeType = (
   event: ChangeEvent<HTMLInputElement>,
-  searchTerm: string,
+  searchTerm: string
 ) => void;
 
 export interface ISearchProps {
@@ -18,4 +18,6 @@ export interface ISearchProps {
   value?: string;
   name?: string;
   id?: string;
+  ariaLabel: string;
+  // onSubmit: (e) => void;
 }

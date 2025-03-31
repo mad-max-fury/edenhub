@@ -1,3 +1,5 @@
+import { AuthRouteConfig } from "./routes";
+
 export const Roles = {
   admin: "official",
   staff: "staff",
@@ -56,3 +58,22 @@ export enum SEARCH_DELAY {
 export const CURRENT_YEAR = 2025;
 
 export const FILE_SIZE = 1;
+
+export const MENU_ITEMS = [
+  { title: "HOME", path: AuthRouteConfig.HOME },
+  { title: "SHOP", path: AuthRouteConfig.SHOP },
+  { title: "ABOUT US", path: AuthRouteConfig.ABOUT },
+];
+
+export const CONTACT_ITEMS = [
+  {
+    title: "TELEPHONE",
+    value: "090-123-4567-0",
+    link: "tel:09012345670",
+  },
+  {
+    title: "EMAIL",
+    value: "support@edenwoodwatchhub.com",
+    link: "mailto:support@edenwoodwatchhub.com",
+  },
+];

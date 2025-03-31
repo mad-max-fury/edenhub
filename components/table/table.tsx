@@ -99,7 +99,7 @@ const TMTable = <T extends object>({
     },
     usePagination,
     useSticky,
-    isStickyColumn && useBlockLayout,
+    isStickyColumn && useBlockLayout
   ) as PaginationTableInstance<T>;
 
   const list = { hidden: { opacity: loading ? 0 : 1 } };
@@ -149,7 +149,7 @@ const TMTable = <T extends object>({
                       className={cn(
                         "bg-N0 px-6 py-4",
                         // @ts-expect-error : not implemented
-                        column.sticky && "shadow-sm",
+                        column.sticky && "shadow-sm"
                       )}
                       key={Math.random() * index}
                     >
@@ -182,7 +182,7 @@ const TMTable = <T extends object>({
                       key={Math.PI * Math.random()}
                       className={cn(
                         `isolate border-b border-solid border-N40 bg-N0 last-of-type:border-none`,
-                        index === 0 ? `!z-[${index + 1}]` : `!z-[${-index}]`,
+                        index === 0 ? `!z-[${index + 1}]` : `!z-[${-index}]`
                       )}
                     >
                       {row.cells.map((cell, index) => (
@@ -194,9 +194,9 @@ const TMTable = <T extends object>({
                           animate={{ visibility: "visible", x: 5 }}
                           transition={{ type: "spring", stiffness: 100 }}
                           className={cn(
-                            " px-4 py-2 text-p-m text-sm font-normal text-N900",
+                            " px-4 py-2 text-p-m text-sm font-normal font-clashDisplay text-N900",
                             // @ts-expect-error: temporally disabled sticky
-                            cell.column?.sticky ? "bg-white" : "",
+                            cell.column?.sticky ? "bg-white" : ""
                           )}
                         >
                           {cell.render("Cell")}

@@ -1,9 +1,12 @@
 export const getAllroutes = (route: object) => [...Object.values(route)];
 const LandingPages = {
   HOME: "/",
+  ABOUT: "/about",
+  SHOP: "/shop",
 };
 const AuthPages = {
   LOGIN: "/auth/login",
+  SIGNUP: "/auth/signup",
   CONFIRM_LOGIN: "/auth/confirm-login",
   FORGOT_PASSWORD: "/auth/forgot-password",
   RESET_PASSWORD: "/auth/reset-password",

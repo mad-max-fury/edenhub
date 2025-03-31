@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Fragment, useEffect } from "react";
-import { CloseXIcon } from "@/assets/svgs";
+import { X as CloseXIcon } from "lucide-react";
 import { cn } from "@/utils/helpers";
 import {
   Dialog,
@@ -80,7 +80,7 @@ function Modal({
             <DialogPanel
               className={cn(
                 mobileLayoutType === "normal" ? "" : "msm:h-screen",
-                "flex max-h-screen w-full max-w-[744px] flex-col bg-N0 shadow-xl md:w-[90%] md:rounded-md",
+                "flex max-h-screen w-full max-w-[744px] flex-col bg-N0 shadow-xl md:w-[90%] md:rounded-md"
               )}
             >
               <div className="sticky top-0 flex items-center justify-between rounded-t-[inherit] border-b border-solid border-N40 bg-N0 px-6 py-4">
@@ -92,7 +92,9 @@ function Modal({
                   <CloseXIcon />
                 </Button>
               </div>
-              <div className="flex-1 flex-grow overflow-y-scroll">{children}</div>
+              <div className="flex-1 flex-grow overflow-y-scroll">
+                {children}
+              </div>
               {footerData && (
                 <div className="border-t border-solid border-N40 bg-N0 px-6 py-4">
                   {footerData}

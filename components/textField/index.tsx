@@ -16,7 +16,7 @@ import { ITextFieldProps } from "./types";
 
 const TextFieldComponent = <FV extends FieldValues>(
   props: ITextFieldProps<FV>,
-  ref?: ForwardedRef<HTMLInputElement>,
+  ref?: ForwardedRef<HTMLInputElement>
 ) => {
   const {
     type = "text",
@@ -43,7 +43,7 @@ const TextFieldComponent = <FV extends FieldValues>(
 
   const classes = clsx(
     className,
-    `block w-full text-sm bg-transparent text-N700 placeholder:text-N80 border rounded py-2 px-3 focus:outline-B100 focus:border-2 disabled:cursor-not-allowed disabled:bg-N20 disabled:text-N70  ${error ? "border-R400 border-2" : "border-N40"}`,
+    `block w-full text-sm bg-transparent text-N700 placeholder:text-N80 border rounded py-2 px-3 focus:outline-B100 focus:border-2 disabled:cursor-not-allowed disabled:bg-N20 disabled:text-N70  ${error ? "border-R400 border-2" : "border-N40"}`
   ); //generic styles for input
 
   const passwordClasses = clsx(`grow focus:outline-none`, className); //special styles for password input
@@ -64,7 +64,7 @@ const TextFieldComponent = <FV extends FieldValues>(
       //If TextField isn't expecting an icon
       return (
         <div
-          className={`${flexStyle === "row" && "md:grid md:grid-cols-12 md:items-center"}`}
+          className={`font-clashDisplay ${flexStyle === "row" && "md:grid md:grid-cols-12 md:items-center "}`}
         >
           {label && label.toString().length > 0 && (
             <div
@@ -109,7 +109,7 @@ const TextFieldComponent = <FV extends FieldValues>(
       //If Textfield is expecting an icon
       return (
         <div
-          className={`${flexStyle === "row" && "md:grid md:grid-cols-12 md:items-center"}`}
+          className={`font-clashDisplay ${flexStyle === "row" && "md:grid md:grid-cols-12 md:items-center"}`}
         >
           {label && label.toString().length > 0 && (
             <Typography
@@ -141,7 +141,7 @@ const TextFieldComponent = <FV extends FieldValues>(
     }
   };
   return (
-    <div>
+    <div className="font-clashDisplay">
       {inputType === "input" ? (
         type === "password" ? (
           <div
@@ -247,7 +247,7 @@ export type InputComponentType = <
     ref?:
       | React.ForwardedRef<HTMLInputElement>
       | UseFormRegisterReturn<TFieldName>;
-  },
+  }
 ) => ReturnType<typeof TextFieldComponent>;
 
 const TextField = React.forwardRef(TextFieldComponent) as InputComponentType;

@@ -1,12 +1,13 @@
 "use client";
 
 import React, { FC, FormEvent } from "react";
-import SearchIcon from "@/assets/svgs/search-icon.svg";
+
 import clsx from "clsx";
 
 import { ISearchProps } from "./types";
+import { Search } from "lucide-react";
 
-const Search: FC<ISearchProps> = (props) => {
+const SearchInput: FC<ISearchProps> = (props) => {
   const {
     placeholder = "Enter a search term",
     onChange,
@@ -14,6 +15,7 @@ const Search: FC<ISearchProps> = (props) => {
     className,
     name,
     id = "rse-search",
+    ariaLabel,
   } = props;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -21,26 +23,30 @@ const Search: FC<ISearchProps> = (props) => {
   };
 
   const classes = clsx(
-    `flex justify-normal items-center border border-N40 rounded py-2 px-3 focus-within:border-B100 focus-within:border-2`,
-    className,
+    `flex justify-normal font-clashDisplay items-center border border-N40 rounded py-2 px-3 focus-within:border-BR100 focus-within:border-2`,
+    className
   );
 
   return (
     <form className={classes} onSubmit={handleSubmit}>
-      <input
-        type="search"
-        name={name}
-        id={id}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        className="grow focus:outline-none"
-      />
-      <button type="submit">
-        <SearchIcon />
-      </button>
+      <div className="relative w-full">
+        <Search
+          className="absolute left-0 top-1/2 -translate-y-1/2 text-gray-400"
+          size={20}
+        />
+        <input
+          type="search"
+          name={name}
+          id={id}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          aria-label={ariaLabel}
+          className="grow w-full text-ellipsis text-p-s md:text-p-m pl-6 focus:outline-none"
+        />
+      </div>
     </form>
   );
 };
 
-export { Search };
+export { SearchInput };

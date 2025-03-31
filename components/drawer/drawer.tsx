@@ -18,6 +18,7 @@ interface DrawerProps {
   loading?: boolean;
   selector: string;
   header: React.ReactNode;
+  width?: string;
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
@@ -33,6 +34,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   loading,
   selector,
   header,
+  width = "256px",
 }) => {
   const portalRef = useRef<Element | null>(null);
 
@@ -69,9 +71,10 @@ export const Drawer: React.FC<DrawerProps> = ({
               }`}
             />
             <div
-              className={`fixed top-0 flex h-full w-[256px] flex-col transition-transform duration-300 ${
+              className={`fixed top-0 flex h-full w-full flex-col transition-transform duration-300 ${
                 anchor === "right" ? "right-0" : "left-0"
               } ${open ? "translate-x-0" : anchor === "right" ? "translate-x-full" : "-translate-x-full"} z-50 bg-white`}
+              style={{ maxWidth: width }}
             >
               <div className="p-4">{header}</div>
               <div className="flex-1 flex-grow overflow-auto p-4 hideScrollBar">
@@ -104,7 +107,7 @@ export const Drawer: React.FC<DrawerProps> = ({
               )}
             </div>
           </div>,
-          portalRef.current,
+          portalRef.current
         )}
     </>
   );

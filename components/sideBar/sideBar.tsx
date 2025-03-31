@@ -1,151 +1,118 @@
 "use client";
 
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { CloseXIcon, HamburgerMainIcon } from "@/assets/svgs";
-import { apiKey, appraisalAppUrl, appraisalBaseApiUrl } from "@/config";
-import { UserContext } from "@/layouts/appLayout";
+import { CloseXIcon, HamburgerIcon } from "@/assets/svgs";
 import { cn } from "@/utils/helpers";
-import axios from "axios";
-
 import { Drawer } from "../drawer/drawer";
-import { AppLogo } from "../logo/logo";
-import { notify } from "../notifications/notify";
 import { Typography } from "../typography";
+import { Button } from "../buttons";
+import { CONTACT_ITEMS, MENU_ITEMS } from "@/constants/data";
 
 interface MenuItem {
   title: string;
-  path: string | (() => void);
+  path: string;
 }
-interface Menu {
+
+interface ContactItem {
   title: string;
-  items: MenuItem[];
+  value: string;
+  link: string;
 }
-export const SideBar = ({ title = "MODULES", items = [] }: Menu) => {
+
+const NavLinkBtn: React.FC<MenuItem> = ({ title, path }) => (
+  <Link
+    href={path}
+    className={cn(
+      "rounded-[2px] p-[8px_12px] w-fit relative text-N900 transition-all duration-[0.5s] ease-in-out after:content-[''] after:w-0 after:absolute after:top-full after:transition-all after:duration-300 after:ease-in-out after:h-[5px] after:bg-card hover:text-BR300 [&:hover]:after:w-[80%] [&:hover]:after:translate-x-[20%]"
+    )}
+  >
+    <Typography
+      variant="h-xxl"
+      fontWeight="medium"
+      color="text-default"
+      className="text-[inherit] transition-all duration-300 ease-in-out"
+    >
+      {title}
+    </Typography>
+  </Link>
+);
+
+const ContactLink: React.FC<ContactItem> = ({ title, link, value }) => (
+  <div className="flex flex-col gap-2">
+    <Typography
+      variant="h-s"
+      fontWeight="medium"
+      color="text-default"
+      className="text-[inherit] transition-all duration-300 ease-in-out"
+    >
+      {title}
+    </Typography>
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:underline"
+    >
+      <Typography
+        variant="p-m"
+        fontWeight="medium"
+        color="LB600"
+        className="text-[inherit] transition-all duration-300 ease-in-out"
+      >
+        {value}
+      </Typography>
+    </a>
+  </div>
+);
+
+export const SideBar: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const user = useContext(UserContext);
 
   const handleOpenDrawer = useCallback(() => setIsDrawerOpen(true), []);
   const handleCloseDrawer = useCallback(() => setIsDrawerOpen(false), []);
-  const [loading, setLoading] = useState(false);
-
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `${appraisalBaseApiUrl}/v1/Auth/login-from-main?username=${user?.user?.username}`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": `${apiKey}`,
-          },
-        },
-      );
-      if (response?.status === 200) {
-        const dummyLink = document.createElement("a");
-        dummyLink.href = `${appraisalAppUrl}/link?email=${user?.user?.username}&identifier=${apiKey}`;
-        dummyLink.target = "_blank";
-        document.body.appendChild(dummyLink);
-        dummyLink.click();
-        handleCloseDrawer();
-      }
-    } catch (err) {
-      notify.error({
-        message: "Access Denied",
-        subtitle: "You cannot access this resource!!",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [user?.user?.username, handleCloseDrawer]);
-
-  const itemsIncludingReroute = useMemo(
-    () => [
-      ...items,
-      {
-        title: loading ? "Processing..." : "Self Appraisals",
-        path: fetchData,
-      },
-    ],
-    [loading, items, fetchData],
-  );
 
   return (
     <>
-      <button onClick={handleOpenDrawer}>
-        <HamburgerMainIcon />
-      </button>
+      <Button
+        shape="pill"
+        variant="gold"
+        size="plain"
+        onClick={handleOpenDrawer}
+        className="aspect-square h-[50px]"
+      >
+        <HamburgerIcon />
+      </Button>
+
       <Drawer
         open={isDrawerOpen}
         onClose={handleCloseDrawer}
         anchor="left"
-        selector="drawer-root" // portal id selector
+        selector="drawer-root"
+        width="797px"
         header={
-          <div className="flex items-center gap-1">
+          <div className="flex items-center justify-end gap-1">
             <CloseXIcon
               onClick={handleCloseDrawer}
-              className={
-                "cursor-pointer transition-all duration-300 ease-in-out hover:scale-[1.4] hover:opacity-90"
-              }
+              className="cursor-pointer transition-all duration-300 ease-in-out hover:scale-[.9] hover:opacity-90"
             />
-            <AppLogo remain />
           </div>
         }
       >
-        <div className={"flex h-full w-full flex-col"}>
-          <Typography variant={"h-xs"} fontWeight={"bold"} color={"N200"}>
-            {title}
-          </Typography>
+        <div className="flex h-full w-full flex-col max-w-[455px]">
+          <div className="mt-4 flex flex-1 overflow-auto hideScrollBar w-full flex-col gap-12">
+            {MENU_ITEMS.map((item) => (
+              <NavLinkBtn key={item.title} {...item} />
+            ))}
+          </div>
 
-          <div className="mt-4 flex w-full flex-col gap-2">
-            {itemsIncludingReroute.map((item, index) => (
-              <NavLinkBtn key={index} {...item} />
+          <div className="flex items-center justify-between  flex-wrap">
+            {CONTACT_ITEMS.map((item) => (
+              <ContactLink key={item.title} {...item} />
             ))}
           </div>
         </div>
       </Drawer>
     </>
-  );
-};
-
-const NavLinkBtn = ({ title, path }: MenuItem) => {
-  const pathName = usePathname();
-  const findActiveLink = (root: string) =>
-    pathName?.split("/")[2] === root?.split("/")[2];
-  const isFunction = typeof path === "function";
-  return isFunction ? (
-    <button
-      onClick={path}
-      className={cn(
-        "rounded-[2px] p-[8px_12px] text-N900 transition-all duration-300 ease-in-out",
-        "bg-transparent hover:bg-N10 hover:text-B300",
-      )}
-    >
-      <Typography
-        variant="p-m"
-        className="text-[inherit] transition-all duration-300 ease-in-out"
-      >
-        {title}
-      </Typography>
-    </button>
-  ) : (
-    <Link
-      href={path ?? ""}
-      className={cn(
-        "rounded-[2px] p-[8px_12px] text-N900 transition-all duration-300 ease-in-out",
-        findActiveLink(path)
-          ? "bg-N20 text-B400 hover:bg-N30"
-          : "bg-transparent hover:bg-N10 hover:text-B300",
-      )}
-    >
-      <Typography
-        variant="p-m"
-        className="text-[inherit] transition-all duration-300 ease-in-out"
-      >
-        {title}
-      </Typography>
-    </Link>
   );
 };

@@ -14,7 +14,7 @@ const config: Config = {
       md: "768px",
       lg: "1024px",
       xl: "1280px",
-      "2xl": "1440px",
+      "2xl": "1360px",
       mxl: { max: "1279px" },
       mlg: { max: "1023px" },
       mmlg: { max: "976px" },
@@ -29,7 +29,7 @@ const config: Config = {
       "mxl-height": { raw: "(max-height: 850px)" },
     },
     fontFamily: {
-      circularStd: ["var(--font-circularStd)", ...fontFamily.serif],
+      clashDisplay: ["var(--font-clash-display)", ...fontFamily.serif],
     },
     extend: {
       backgroundImage: {},
@@ -56,6 +56,26 @@ const config: Config = {
         "c-s": ["0.75rem", { lineHeight: "12px", fontWeight: 700 }],
       },
       colors: {
+        // Bg
+        default: "var(--color-bg)",
+        card: "var(--color-bg50)",
+        // Gold
+        LB50: "var(--color-LB50)",
+        LB75: "var(--color-LB75)",
+        LB100: "var(--color-LB100)",
+        LB200: "var(--color-LB200)",
+        LB300: "var(--color-LB300)",
+        LB400: "var(--color-LB400)",
+        LB500: "var(--color-LB500)",
+        LB600: "var(--color-LB600)",
+        // Brown
+        BR50: "var(--color-BR50)",
+        BR75: "var(--color-BR75)",
+        BR100: "var(--color-BR100)",
+        BR200: "var(--color-BR200)",
+        BR300: "var(--color-BR300)",
+        BR400: "var(--color-BR400)",
+        BR500: "var(--color-BR500)",
         // Blue
         B50: "var(--color-B50)",
         B75: "var(--color-B75)",

@@ -9,15 +9,14 @@ import {
   Button,
   ButtonDropdown,
   ButtonDropdownItem,
-  EmployeeCard,
   FileUpload,
   FileUploadSingle,
+  Footer,
   GlobalMenu,
   Modal,
   notify,
   PageLoader,
-  PerformanceRating,
-  Search,
+  SearchInput,
   SideTab,
   TabUnderline,
   TextField,
@@ -26,17 +25,13 @@ import {
 } from "@/components";
 import { queryParamsHelper } from "@/utils/helpers";
 
-import { QuarterlyCard } from "@/components/reviewsCard/reviewsCard";
-
-import PerformanceRatingExample from "./_component/performanceRatingExample";
-import { ReviewCardsExample } from "./_component/reviewCardsExample";
 import UserTable from "./_component/tableExample";
 
 const AvailableComponentsExample = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const allQueryParamsObj = queryParamsHelper.queryStringToObject(
-    searchParams.toString(),
+    searchParams.toString()
   );
   const activeQueryTab = searchParams.get("t") || "staff-list";
   const activeQuerySideTab = searchParams.get("s") || "staff-list";
@@ -112,7 +107,7 @@ const AvailableComponentsExample = () => {
 
   const handleSearchSubmit = (
     e: React.FormEvent<HTMLFormElement>,
-    searchTerm: string,
+    searchTerm: string
   ) => {
     e.preventDefault();
     console.log("Search submitted with term:", searchTerm);
@@ -126,12 +121,14 @@ const AvailableComponentsExample = () => {
         variant="h-xxl"
         fontWeight={"black"}
         color={"N0"}
-        className="sticky left-0 right-0 top-[70px] z-10 bg-B400 px-4 py-6"
+        className="sticky left-0 right-0 top-[70px] z-10 bg-BR400 px-4 py-6"
         gutterBottom
       >
-        Components Examples
+        <div className="max-w-screen-2xl mx-auto w-full">
+          Components Examples
+        </div>
       </Typography>
-      <div className="px-6">
+      <div className="px-6 max-w-screen-2xl mx-auto">
         <Typography
           variant="h-xl"
           fontWeight={"bold"}
@@ -264,11 +261,12 @@ const AvailableComponentsExample = () => {
           label="Password Input"
         />
 
-        <Search
+        <SearchInput
           placeholder="Search for something..."
           onSubmit={handleSearchSubmit}
           onChange={() => {}}
           className="mb-4"
+          ariaLabel="Search"
         />
 
         <Typography
@@ -356,6 +354,17 @@ const AvailableComponentsExample = () => {
             Tertiary disabled
           </Button>
 
+          <Button variant={"brown"} shape={"pill"}>
+            Brown
+          </Button>
+          <Button variant={"brown-light"} shape={"pill"}>
+            Light brown
+          </Button>
+          <Button variant={"gold"}>Gold</Button>
+          <Button variant={"primary"} types="outline" shape={"pill"}>
+            Pill Shape
+          </Button>
+
           <Button variant="neutral">Neutral Filled</Button>
           <Button variant="neutral" types="outline">
             Neutral Outline
@@ -389,7 +398,7 @@ const AvailableComponentsExample = () => {
         >
           Dropdown Examples:
         </Typography>
-        <div className="mb-8 flex h-[300px]">
+        <div className="mb-8 flex h-[300px] flex-wrap">
           <ButtonDropdown buttonGroup={buttonGroup} />
 
           <Button
@@ -443,50 +452,6 @@ const AvailableComponentsExample = () => {
           gutterBottom
           className="bg-R50 px-4 py-2"
         >
-          Quarterly Cards Example:
-        </Typography>
-        <div className="mb-8 flex gap-6 align-middle">
-          <QuarterlyCard
-            description="Do aliquip Lorem cupidatat reprehenderit enim est non in enim culpa ex mollit amet aute reprehenderit."
-            dropdownItems={buttonGroup}
-            isMini
-            status="ongoing"
-            title="Q4 Review 2021"
-          />
-          <QuarterlyCard
-            description="Do aliquip Lorem cupidatat reprehenderit enim est non in enim culpa ex mollit amet aute reprehenderit."
-            dropdownItems={buttonGroup}
-            isMini
-            status="ongoing"
-            title="Q4 Review 2021"
-          />
-          <QuarterlyCard
-            description="Do aliquip Lorem cupidatat reprehenderit enim est non in enim culpa ex mollit amet aute reprehenderit."
-            dropdownItems={buttonGroup}
-            isMini
-            status="ongoing"
-            title="Q4 Review 2021"
-          />
-        </div>
-        <Typography
-          variant="h-xl"
-          fontWeight={"bold"}
-          color={"N200"}
-          gutterBottom
-          className="bg-R50 px-4 py-2"
-        >
-          Review Cards Examples:
-        </Typography>
-        <div className="mb-8">
-          <ReviewCardsExample />
-        </div>
-        <Typography
-          variant="h-xl"
-          fontWeight={"bold"}
-          color={"N200"}
-          gutterBottom
-          className="bg-R50 px-4 py-2"
-        >
           Table Examples:
         </Typography>
         <div className="mb-8">
@@ -508,7 +473,7 @@ const AvailableComponentsExample = () => {
         >
           Badge Examples:
         </Typography>
-        <div className="flex gap-4 py-6">
+        <div className="flex gap-4 py-6 flex-wrap">
           <Badge variant="yellow" />
           <Badge variant="green" text="Custom Active" />
           <Badge variant="blue" />
@@ -517,6 +482,7 @@ const AvailableComponentsExample = () => {
           <Badge variant="teal" text="Information" />
         </div>
       </div>
+      <Footer />
 
       <Modal
         isOpen={isModalOpen}
@@ -563,7 +529,6 @@ const AvailableComponentsExample = () => {
           </Button>
         </div>
       </Modal>
-      <PerformanceRatingExample />
     </div>
   );
 };

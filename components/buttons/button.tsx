@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Spinner } from "../loaders";
 import { Typography } from "../typography";
 
-const buttonVariants = cva("rounded transition-all ease-in-out duration-400", {
+const buttonVariants = cva(" transition-all ease-in-out duration-400", {
   variants: {
     variant: {
       primary:
@@ -18,6 +18,11 @@ const buttonVariants = cva("rounded transition-all ease-in-out duration-400", {
         "bg-Y300 hover:bg-Y200 text-N0 disabled:bg-Y75 disabled:text-N70 disabled:cursor-not-allowed", // yellow
       danger:
         "bg-R400 hover:bg-R300 text-N0 disabled:bg-R75 disabled:text-N20 disabled:cursor-not-allowed", // red
+      brown:
+        "bg-BR500 hover:bg-BR400 text-N0 disabled:bg-BR75 disabled:text-N20 disabled:cursor-not-allowed",
+      gold: "bg-card hover:bg-LB400 text-N0 disabled:bg-LB75 disabled:text-N20 disabled:cursor-not-allowed", // brown
+      "brown-light":
+        "bg-BR400 hover:bg-BR300 text-N0 disabled:bg-BR75 disabled:text-N20 disabled:cursor-not-allowed", // brown light
       plain: "",
     },
     size: {
@@ -27,6 +32,11 @@ const buttonVariants = cva("rounded transition-all ease-in-out duration-400", {
     types: {
       outline: "",
       filled: "",
+    },
+    shape: {
+      rounded: "rounded",
+      pill: "rounded-[40px]",
+      none: "",
     },
   },
   compoundVariants: [
@@ -57,6 +67,7 @@ const buttonVariants = cva("rounded transition-all ease-in-out duration-400", {
   defaultVariants: {
     variant: "primary",
     size: "default",
+    shape: "none",
     types: "filled",
   },
 });
@@ -73,19 +84,20 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant = "primary",
       types = "filled",
+      shape = "rounded",
       size,
       children,
       loading = false,
       ...props
     },
-    ref,
+    ref
   ) => {
     const Comp = "button";
     return (
       <Comp
         className={cn(
-          buttonVariants({ variant, size, types, className }),
-          "flex items-center justify-center gap-4",
+          buttonVariants({ variant, size, types, shape, className }),
+          "flex items-center justify-center gap-4"
         )}
         ref={ref}
         {...props}
@@ -107,7 +119,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </Comp>
     );
-  },
+  }
 );
 Button.displayName = "Button";
 

@@ -2,28 +2,84 @@
 
 import React from "react";
 import Image from "next/image";
-import { logoTextAdmin, logoTextEmployee } from "@/assets/images";
-import { LogoMini } from "@/assets/svgs";
+import {
+  logoIconMiniBlack,
+  logoIconMiniWhite,
+  logoTextVerticalBlack,
+  logoTextVerticalWhite,
+  logoTextHorizontalBlack,
+  logoTextHorizontalWhite,
+  logoTextHorinzontalYellow,
+} from "@/assets/images";
+
 import { cn } from "@/utils/helpers";
+import useMediaQuery from "@/hooks/useMediaQuery";
+
+type LogoVariant =
+  | "iconMiniBlack"
+  | "iconMiniWhite"
+  | "textVerticalBlack"
+  | "textVerticalWhite"
+  | "textHorizontalBlack"
+  | "textHorizontalWhite"
+  | "textHorizontalYellow";
+
+type LogoSize = "sm" | "md" | "lg" | "xlg";
 
 interface IProps {
-  isAdmin?: boolean;
-  remain?: boolean;
+  variant?: LogoVariant;
+  size?: LogoSize;
+  className?: string;
+  onClick?: () => void;
+  responsive?: boolean;
 }
-export const AppLogo = ({ isAdmin = false, remain = false }: IProps) => {
+
+export const AppLogo = ({
+  variant = "iconMiniBlack",
+  size = "md",
+  className,
+  onClick,
+  responsive = false,
+}: IProps) => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const logoMap = {
+    iconMiniBlack: logoIconMiniBlack,
+    iconMiniWhite: logoIconMiniWhite,
+    textVerticalBlack: logoTextVerticalBlack,
+    textVerticalWhite: logoTextVerticalWhite,
+    textHorizontalBlack: logoTextHorizontalBlack,
+    textHorizontalWhite: logoTextHorizontalWhite,
+    textHorizontalYellow: logoTextHorinzontalYellow,
+  };
+
+  const sizeClasses = {
+    sm: "h-[24px]",
+    md: "h-[32px]",
+    lg: "h-[40px]",
+    xlg: "h-[60px]",
+  };
+
+  const displayVariant =
+    responsive && isMobile
+      ? variant.includes("White")
+        ? "iconMiniWhite"
+        : "iconMiniBlack"
+      : variant;
+
   return (
-    <>
-      <LogoMini className={cn("hidden mmd:block", remain && "mmd:hidden")} />
+    <div className="w-fit">
       <Image
-        src={isAdmin ? logoTextAdmin : logoTextEmployee}
-        alt="logo"
+        src={logoMap[displayVariant]}
+        alt="Logo"
         placeholder="blur"
+        onClick={onClick}
         className={cn(
-          "h-[24px] object-contain mmd:hidden",
-          isAdmin ? "w-[212px]" : "w-[144px]",
-          remain && "mmd:block",
+          "object-contain w-fit aspect-auto",
+          sizeClasses[size],
+          className
         )}
       />
-    </>
+    </div>
   );
 };

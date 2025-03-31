@@ -3,7 +3,7 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
 
-import circularStd from "@/fonts";
+import clashDisplay from "@/fonts";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -29,7 +29,7 @@ function NotifCloseIcon() {
 function NotificationContainer() {
   return (
     <ToastContainer
-      bodyStyle={{ ...circularStd.style }}
+      bodyStyle={{ ...clashDisplay.style }}
       position="top-right"
       autoClose={5000}
       hideProgressBar

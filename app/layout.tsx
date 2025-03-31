@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
-import circularStd from "@/fonts";
+import clashDisplay from "@/fonts";
 
 import "./globals.css";
 
@@ -15,18 +15,19 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://google.com/"),
-  title: { default: "Resource Edge", template: `%s | Resource Edge` },
-  description: "Talent Management Application for Tenece Professional Services",
+  title: { default: "EdenHub", template: `%s | EdenHub` },
+  description:
+    "E-commerce Watch Selling Website aimed to create an online platform where users can browse, select, and purchase watches, sunglasses, bracelets and personalised gifts. Additionally, users will have the option to customize their watch orders with specific designs. The website will also include administrative functionalities to manage watch listings, user accounts, and order tracking.",
   icons: {
     icon: [
       {
-        url: "../public/favicon/resource-edge-favicon.png",
+        url: "../public/favicon/logoIconWhite.png",
         sizes: "32x32",
         type: "image/png",
       },
     ],
   },
-  keywords: "manage company, organization app",
+  keywords: "Buy watch, customize , watch, sunglasses, bracelets, gifts",
 };
 
 export default function RootLayout({
@@ -38,7 +39,7 @@ export default function RootLayout({
     <html lang="en">
       <Head />
 
-      <body className={circularStd.variable}>
+      <body className={clashDisplay.variable}>
         <div id="drawer-root"></div>
         <div id="portal"></div>
         <AppProvider>{children}</AppProvider>

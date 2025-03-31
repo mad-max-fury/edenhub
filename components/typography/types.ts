@@ -21,6 +21,23 @@ export const variantMapping = {
 export type TypographyVariant = keyof typeof variantMapping;
 
 export type TypographyColors =
+  // Light Brown
+  | "LB50"
+  | "LB75"
+  | "LB100"
+  | "LB200"
+  | "LB300"
+  | "LB400"
+  | "LB500"
+  | "LB600"
+  // Brown
+  | "BR50"
+  | "BR75"
+  | "BR100"
+  | "BR200"
+  | "BR300"
+  | "BR400"
+  | "BR500"
   // Blue
   | "B50"
   | "B75"
@@ -93,7 +110,8 @@ export type TypographyColors =
   | "N900"
   //Text Colors
   | "text-default"
-  | "text-light";
+  | "text-light"
+  | "text-sec";
 
 export type TypographyAlign =
   | "start"
@@ -105,7 +123,7 @@ export type TypographyAlign =
 
 export type TypographyFontWeight = "regular" | "medium" | "bold" | "black";
 
-export type TypographyFont = "circularStd";
+export type TypographyFont = "clashDisplay";
 
 export interface TypographyProps
   extends React.HTMLAttributes<HTMLOrSVGElement> {

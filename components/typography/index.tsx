@@ -7,6 +7,23 @@ import { cva } from "class-variance-authority";
 import { TypographyProps, variantMapping } from "./types";
 
 const colorClasses = {
+  // Light Brown
+  LB50: "text-LB50",
+  LB75: "text-LB75",
+  LB100: "text-LB100",
+  LB200: "text-LB200",
+  LB300: "text-LB300",
+  LB400: "text-LB400",
+  LB500: "text-LB500",
+  LB600: "text-LB600",
+  // Brown
+  BR50: "text-BR50",
+  BR75: "text-BR75",
+  BR100: "text-BR100",
+  BR200: "text-BR200",
+  BR300: "text-BR300",
+  BR400: "text-BR400",
+  BR500: "text-BR500",
   // Blue
   B50: "text-B50",
   B75: "text-B75",
@@ -89,6 +106,7 @@ const colorClasses = {
   //Text Colors
   "text-default": "text-text-default",
   "text-light": "text-text-light",
+  "text-sec": "text-default",
 };
 
 const typography = cva("", {
@@ -113,7 +131,7 @@ const typography = cva("", {
       span: "",
     },
     font: {
-      circularStd: "font-circularStd",
+      clashDisplay: "font-clashDisplay",
     },
     color: colorClasses,
     fontWeight: {
@@ -147,7 +165,7 @@ function Typography(props: TypographyProps) {
     align = "left",
     color = "N700",
     customClassName = "",
-    font = "circularStd",
+    font = "clashDisplay",
     children,
     className,
     ...rest
@@ -162,7 +180,7 @@ function Typography(props: TypographyProps) {
   const classNameI = cn(
     gutterBottom && "mb-4",
     noWrap && "overflow-hidden text-ellipsis whitespace-nowrap",
-    className && className,
+    className && className
   );
 
   return (
@@ -177,7 +195,7 @@ function Typography(props: TypographyProps) {
         font,
         className: cn(
           classNameI && classNameI,
-          customClassName && customClassName,
+          customClassName && customClassName
         ),
       })}
       {...rest}

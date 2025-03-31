@@ -23,7 +23,7 @@ const badgeVariants = cva(
     defaultVariants: {
       variant: "blue",
     },
-  },
+  }
 );
 
 export interface BadgeProps
@@ -74,7 +74,7 @@ const Badge: React.FC<BadgeProps> = ({
 
   return (
     <span className={cn(badgeVariants({ variant }), className)} {...props}>
-      <Typography variant="p-s" color={"N700"} fontWeight="regular">
+      <Typography variant="p-s" color={"N700"} noWrap fontWeight="regular">
         {text || getDefaultText(variant || "blue")}
       </Typography>
     </span>

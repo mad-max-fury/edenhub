@@ -20,7 +20,7 @@ export const PaginationElement: React.FC<PaginationElementProps> = ({
 }) => {
   const pages = Array.from(
     { length: noOfPages || (length && limit ? Math.ceil(length / limit) : 0) },
-    (_, index) => index + 1,
+    (_, index) => index + 1
   );
 
   if ((length && limit && length <= limit) || (noOfPages && noOfPages <= 1)) {
@@ -29,7 +29,7 @@ export const PaginationElement: React.FC<PaginationElementProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-center [&_button[aria-current="page"]]:bg-B400 [&_button[aria-current="page"]]:text-N0 [&_button[disabled]]:hidden`}
+      className={`flex items-center justify-center [&_button[aria-current="page"]]:bg-BR400 [&_button[aria-current="page"]]:text-N0 [&_button[disabled]]:hidden`}
     >
       <Pagination
         pages={pages}

@@ -1,30 +1,40 @@
 import localFont from "next/font/local";
 
-const circularStd = localFont({
+const clashDisplay = localFont({
   src: [
     {
-      path: "./circularStd/CircularStd-Book.otf",
+      path: "./clashDisplay/ClashDisplay-Extralight.woff2",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "./clashDisplay/ClashDisplay-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./clashDisplay/ClashDisplay-Regular.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "./circularStd/CircularStd-Medium.otf",
+      path: "./clashDisplay/ClashDisplay-Medium.woff2",
       weight: "500",
       style: "normal",
     },
     {
-      path: "./circularStd/CircularStd-Bold.otf",
-      weight: "700",
+      path: "./clashDisplay/ClashDisplay-Semibold.woff2",
+      weight: "600",
       style: "normal",
     },
     {
-      path: "./circularStd/CircularStd-Black.otf",
-      weight: "900",
+      path: "./clashDisplay/ClashDisplay-Variable.woff2",
+      weight: "700",
       style: "normal",
     },
   ],
-  variable: "--font-circularStd",
+  variable: "--font-clash-display",
   display: "swap",
 });
 
-export default circularStd;
+export default clashDisplay;

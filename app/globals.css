@@ -4,6 +4,29 @@
 
 @layer base {
   :root {
+    /* Font */
+    --color-bg: hsl(60, 50%, 96%); /* hex color : #FAFAF0 */
+    --color-bg50: hsl(47, 51%, 84%); /* hex color : #EBE2C1 */
+
+    /* light brown  */
+    --color-LB50: hsl(55, 50%, 95%); /* hex color : #f9f8ed */
+    --color-LB75: hsl(56, 51%, 90%); /* hex color : #f2f0d6 */
+    --color-LB100: hsl(56, 51%, 88%); /* hex color : #f0eed1 */
+    --color-LB200: hsl(52, 53%, 77%); /* hex color : #e3dba5 */
+    --color-LB300: hsl(49, 53%, 64%); /* hex color : #d3c171 */
+    --color-LB400: hsl(47, 52%, 58%); /* hex color : #cbb35c */
+    --color-LB500: hsl(44, 50%, 47%); /* hex color : #b6963c */
+    --color-LB600: hsl(0, 0%, 45%); /* hex color : #737373 */
+
+    /* Brown */
+    --color-BR50: hsl(19, 22%, 65%); /* hex color : #f9f8ed*/
+    --color-BR75: hsl(20, 22%, 57%); /* hex color : #a98979 */
+    --color-BR100: hsl(19, 22%, 49%); /* hex color : #99625C */
+    --color-BR200: hsl(19, 22%, 41%); /* hex color : #7F5F4D */
+    --color-BR300: hsl(19, 22%, 33%); /* hex color : #664D3E */
+    --color-BR400: hsl(17, 22%, 37%); /* hex color : #74564A */
+    --color-BR500: hsl(19, 22%, 17%); /* hex color : #342721 */
+
     /* Blue */
     --color-B50: hsl(213, 100%, 93%); /* hex color : #dbebff */
     --color-B75: hsl(214, 100%, 85%); /* hex color : #B3D4FF */
@@ -84,7 +107,7 @@
     --color-N900: hsl(217, 81%, 12%); /* hex color : #061938 */
 
     /*Text colors*/
-    --color-text-default: hsl(218, 76%, 15%); /* hex color : #091E42 */
+    --color-text-default: hsl(0, 0%, 23%); /* hex color : #091E42 */
     --color-text-light: hsl(218, 31%, 30%); /* hex color :  */
 
     /* toggle button styles  */

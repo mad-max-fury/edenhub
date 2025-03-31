@@ -19,6 +19,22 @@ const bgColorInitials = ["B", "R", "Y", "G", "P", "T"];
 const textColorInitials = ["N"];
 
 const textColorClasses = {
+  // Light Brown
+  LB50: "text-LB50",
+  LB75: "text-LB75",
+  LB100: "text-LB100",
+  LB200: "text-LB200",
+  LB300: "text-LB300",
+  LB400: "text-LB400",
+  LB500: "text-LB500",
+  // Brown
+  BR50: "text-BR50",
+  BR75: "text-BR75",
+  BR100: "text-BR100",
+  BR200: "text-BR200",
+  BR300: "text-BR300",
+  BR400: "text-BR400",
+  BR500: "text-BR500",
   // Blue
   B50: "text-B50",
   B75: "text-B75",
@@ -189,13 +205,13 @@ const bgColorClasses = {
 const getRandomColor = (
   strArray: string[],
   minWeight: number = 300,
-  maxWeight: number = 500,
+  maxWeight: number = 500
 ) => {
   const colorKeys = Object.keys(bgColorClasses).filter(
     (key) =>
       strArray.includes(key[0]) &&
       parseInt(key.slice(1)) >= minWeight &&
-      parseInt(key.slice(1)) <= maxWeight,
+      parseInt(key.slice(1)) <= maxWeight
   );
   const randomIndex = Math.floor(Math.random() * colorKeys.length);
   return colorKeys[randomIndex] as keyof typeof bgColorClasses;
@@ -257,11 +273,11 @@ export const Avatar: React.FC<AvatarProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const randomBgColor = React.useMemo(
     () => getRandomColor(bgColorInitials),
-    [],
+    []
   );
   const randomTextColor = React.useMemo(
     () => getRandomColor(textColorInitials, 0, 0),
-    [],
+    []
   );
   const bgColor = bgColorClasses[colorStyles?.bgColor ?? randomBgColor];
   const textColor = textColorClasses[colorStyles?.textColor ?? randomTextColor];
@@ -308,7 +324,7 @@ export const Avatar: React.FC<AvatarProps> = ({
           bgColor,
           sizeClass,
           textColor,
-          className,
+          className
         )}
       >
         {src ? (
