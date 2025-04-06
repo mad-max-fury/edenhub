@@ -50,3 +50,4 @@ export * from "./pdfViewer/pdfViewer";
 export * from "./miniEmptyState/miniEmptyState";
 export * from "./imageOverlay/imageOverlay";
 export * from "./Reviewer/reviewer";
+export * from "./ReviwerRating/ReviwerRating"

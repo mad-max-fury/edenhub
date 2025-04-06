@@ -25,6 +25,7 @@ import {
   ValidationText,
   ImageOverlay,
   Reviewer,
+  ReviwerRating,
 } from "@/components";
 import { queryParamsHelper } from "@/utils/helpers";
 
@@ -514,7 +515,33 @@ const AvailableComponentsExample = () => {
             review="I’ve owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to customize every detail made it feel truly mine. Worth every penny!"
             imageURL={NewArrivalMan}
           />
-          <Reviewer name="Ginger" review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to customize every detail made it feel truly mine. It’s elegance and meaning in one perfect piece It’s elegance and meaning in one perfect piece!" imageURL={NewArrivalWomen} />
+          <Reviewer
+            name="Ginger"
+            review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to customize every detail made it feel truly mine. It’s elegance and meaning in one perfect piece It’s elegance and meaning in one perfect piece!"
+            imageURL={NewArrivalWomen}
+          />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          Review and Ratings Component
+        </Typography>
+        <div className="my-14 flex flex-col md:flex-row gap-4 bg-LB50 ">
+          <ReviwerRating
+            comment="The quality is outstanding, and the engraving made it uniquely mine. From packaging to design, everything felt premium. Definitely worth it!"
+            imageUrl={NewArrivalMan}
+            rating={4}
+            name="Prince Chijioke"
+          />
+          <ReviwerRating
+            comment="The quality is outstanding, and the engraving made it uniquely mine. From packaging to design, everything felt premium. Definitely worth it!"
+            imageUrl={NewArrivalMan}
+            rating={3}
+            name="Prince Chijioke"
+          />
         </div>
       </div>
 
