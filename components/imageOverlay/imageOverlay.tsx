@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { noImage } from "@/assets/images";  
+import { noImage } from "@/assets/images";
 import { Typography } from "../typography";
 import { StaticImageData } from "next/image";
 
@@ -26,7 +26,7 @@ export const ImageOverlay = ({
         />
       </div>
       <div className="absolute inset-0 bg-black bg-opacity-60 z-20" />
-      <div className="absolute inset-0 flex flex-col gap-y-2 items-center justify-center z-30">
+      <div className="absolute inset-0 flex flex-col gap-y-2 items-center justify-center z-20">
         <Typography
           fontWeight="medium"
           align="center"

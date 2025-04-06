@@ -24,6 +24,7 @@ import {
   Typography,
   ValidationText,
   ImageOverlay,
+  Reviewer,
 } from "@/components";
 import { queryParamsHelper } from "@/utils/helpers";
 
@@ -493,7 +494,11 @@ const AvailableComponentsExample = () => {
         </Typography>
         <div className="my-4 flex flex-col md:flex-row gap-4">
           <ImageOverlay imageURL={NewArrivalMan} />
-          <ImageOverlay imageURL={NewArrivalWomen} mainText="WOMEN" subText="NEW ARRIVAL" />
+          <ImageOverlay
+            imageURL={NewArrivalWomen}
+            mainText="WOMEN"
+            subText="NEW ARRIVAL"
+          />
         </div>
         <Typography
           variant="h-xl"
@@ -503,8 +508,13 @@ const AvailableComponentsExample = () => {
         >
           Review Component
         </Typography>
-        <div className="my-4 ">
-            
+        <div className="my-14 flex flex-col md:flex-row gap-4 ">
+          <Reviewer
+            name="John Doe"
+            review="I’ve owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to customize every detail made it feel truly mine. Worth every penny!"
+            imageURL={NewArrivalMan}
+          />
+          <Reviewer name="Ginger" review="This is a review" imageURL={NewArrivalWomen} />
         </div>
       </div>
 
