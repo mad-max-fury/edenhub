@@ -18,10 +18,10 @@ const StarRating = (rating: number) => {
     const fullStars = Math.floor(rating);
     const emptyStars = 5 - fullStars;
     const stars = Array.from({length: fullStars}, (_, index) => (
-        <FaStar key={index} className="w-7 h-7 text-yellow-500" />
+        <FaStar key={index} className="w-7 h-7 text-Y200" />
     ))
     const emptyStar = Array.from({length: emptyStars}, (_, index) => (
-        <FaRegStar key={index} className="w-7 h-7 text-yellow-500" />
+        <FaRegStar key={index} className="w-7 h-7 text-Y200" />
     ))
     return (
         <div className="flex items-center gap-2 ">
