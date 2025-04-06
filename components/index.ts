@@ -48,3 +48,4 @@ export * from "./smSelect/smAsyncSelect";
 export * from "./footer/footer";
 export * from "./pdfViewer/pdfViewer";
 export * from "./miniEmptyState/miniEmptyState";
+export * from "./imageOverlay/imageOverlay";

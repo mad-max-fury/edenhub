@@ -11,7 +11,9 @@ import logoTextVerticalWhite from "./logoTextVWhite.png";
 import logoTextHorizontalBlack from "./logoTextHBlack.png";
 import logoTextHorizontalWhite from "./logoTextHWhite.png";
 import logoTextHorinzontalYellow from "./logoTextHYellow.png";
-
+import NewArrivalMan from "./NewArrivalMan.jpeg";
+import NewArrivalWomen from "./NewArrivalWomen.jpeg";
+import noImage from "./no-image.png";
 export {
   NotFoundImg,
   NetworkImg,
@@ -23,4 +25,7 @@ export {
   logoTextHorizontalBlack,
   logoTextHorizontalWhite,
   logoTextHorinzontalYellow,
+  NewArrivalMan,
+  NewArrivalWomen,
+  noImage,
 };

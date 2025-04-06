@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Chevron from "@/assets/svgs/chevron-down.svg";
+import { NewArrivalMan, NewArrivalWomen } from "@/assets/images";
 import {
   Badge,
   Button,
@@ -22,6 +23,7 @@ import {
   TextField,
   Typography,
   ValidationText,
+  ImageOverlay,
 } from "@/components";
 import { queryParamsHelper } from "@/utils/helpers";
 
@@ -481,7 +483,31 @@ const AvailableComponentsExample = () => {
           <Badge variant="purple" text="New Feature" />
           <Badge variant="teal" text="Information" />
         </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N200"}
+          className="bg-R100"
+        >
+          Image Overlay Component
+        </Typography>
+        <div className="my-4 flex flex-col md:flex-row gap-4">
+          <ImageOverlay imageURL={NewArrivalMan} />
+          <ImageOverlay imageURL={NewArrivalWomen} mainText="WOMEN" subText="NEW ARRIVAL" />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          Review Component
+        </Typography>
+        <div className="my-4 ">
+            
+        </div>
       </div>
+
       <Footer />
 
       <Modal
