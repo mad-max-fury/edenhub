@@ -514,7 +514,7 @@ const AvailableComponentsExample = () => {
             review="I’ve owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to customize every detail made it feel truly mine. Worth every penny!"
             imageURL={NewArrivalMan}
           />
-          <Reviewer name="Ginger" review="This is a review" imageURL={NewArrivalWomen} />
+          <Reviewer name="Ginger" review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to customize every detail made it feel truly mine. It’s elegance and meaning in one perfect piece It’s elegance and meaning in one perfect piece!" imageURL={NewArrivalWomen} />
         </div>
       </div>
 
