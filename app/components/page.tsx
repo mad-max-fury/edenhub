@@ -33,6 +33,7 @@ import {
   Reviewer,
   ReviwerRating,
   ItemCollection,
+  WatchShowcase,
 } from "@/components";
 import { queryParamsHelper } from "@/utils/helpers";
 
@@ -519,12 +520,12 @@ const AvailableComponentsExample = () => {
         <div className="my-14 flex flex-col md:flex-row gap-4 ">
           <Reviewer
             name="John Doe"
-            review="I've owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to customize every detail made it feel truly mine. Worth every penny!"
+            review="I've owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to WatchShowcase every detail made it feel truly mine. Worth every penny!"
             imageURL={NewArrivalMan}
           />
           <Reviewer
             name="Ginger"
-            review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to customize every detail made it feel truly mine. It's elegance and meaning in one perfect piece It's elegance and meaning in one perfect piece!"
+            review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to WatchShowcase every detail made it feel truly mine. It's elegance and meaning in one perfect piece It's elegance and meaning in one perfect piece!"
             imageURL={NewArrivalWomen}
           />
         </div>
@@ -569,6 +570,22 @@ const AvailableComponentsExample = () => {
             title="Eden Chrono Elite"
             price="650.00"
             href="/products/eden-chrono-elite"
+          />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          WatchShowcase Component
+        </Typography>
+        <div className="my-14 flex flex-col md:flex-row gap-4 ">
+          <WatchShowcase
+            title="Own a Watch That Defines You"
+            subtitle="Create a luxury timepiece tailored to your style. Craftsmanship, prestige, and personalization—all in one watch."
+            buttonText="Start Customizing"
+            backgroundImage={largeWatch}
           />
         </div>
       </div>

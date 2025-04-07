@@ -31,7 +31,6 @@ export const ItemCollection = ({
       </div>
       <div className="mt-3 flex flex-col gap-1 mx-2">
         <Typography
-          variant="h-l"
           fontWeight={"bold"}
           color={"N700"}
           className="text-sm font-medium"
@@ -40,7 +39,6 @@ export const ItemCollection = ({
         </Typography>
         <div className="flex items-center justify-between">
           <Typography
-            variant="h-l"
             fontWeight={"bold"}
             color={"N500"}
             className="text-sm font-normal"
@@ -50,7 +48,6 @@ export const ItemCollection = ({
           <BsArrowUpRightCircle className="text-lg font-normal group-hover:text-primary" />
         </div>
         <Typography
-          variant="h-xl"
           fontWeight={"bold"}
           color={"N500"}
           className="text-xs font-normal"

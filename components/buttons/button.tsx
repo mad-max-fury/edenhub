@@ -39,6 +39,7 @@ const buttonVariants = cva(" transition-all ease-in-out duration-400", {
       none: "",
     },
   },
+
   compoundVariants: [
     {
       types: "outline",
