@@ -14,6 +14,10 @@ import logoTextHorinzontalYellow from "./logoTextHYellow.png";
 import NewArrivalMan from "./NewArrivalMan.jpeg";
 import NewArrivalWomen from "./NewArrivalWomen.jpeg";
 import noImage from "./no-image.png";
+import largeWatch from "./largeWatch.jpeg";
+import watch from "./Watch.jpeg";
+import watch2 from "./Watch2.jpeg";
+
 export {
   NotFoundImg,
   NetworkImg,
@@ -28,4 +32,7 @@ export {
   NewArrivalMan,
   NewArrivalWomen,
   noImage,
+  largeWatch,
+  watch,
+  watch2,
 };

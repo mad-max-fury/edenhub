@@ -51,3 +51,4 @@ export * from "./miniEmptyState/miniEmptyState";
 export * from "./imageOverlay/imageOverlay";
 export * from "./Reviewer/reviewer";
 export * from "./ReviwerRating/ReviwerRating"
+export * from "./itemCollection/itemCollection"

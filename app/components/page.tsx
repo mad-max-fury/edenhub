@@ -4,7 +4,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Chevron from "@/assets/svgs/chevron-down.svg";
-import { NewArrivalMan, NewArrivalWomen } from "@/assets/images";
+import {
+  largeWatch,
+  NewArrivalMan,
+  NewArrivalWomen,
+  watch,
+  watch2,
+} from "@/assets/images";
 import {
   Badge,
   Button,
@@ -26,6 +32,7 @@ import {
   ImageOverlay,
   Reviewer,
   ReviwerRating,
+  ItemCollection,
 } from "@/components";
 import { queryParamsHelper } from "@/utils/helpers";
 
@@ -512,12 +519,12 @@ const AvailableComponentsExample = () => {
         <div className="my-14 flex flex-col md:flex-row gap-4 ">
           <Reviewer
             name="John Doe"
-            review="I’ve owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to customize every detail made it feel truly mine. Worth every penny!"
+            review="I've owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to customize every detail made it feel truly mine. Worth every penny!"
             imageURL={NewArrivalMan}
           />
           <Reviewer
             name="Ginger"
-            review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to customize every detail made it feel truly mine. It’s elegance and meaning in one perfect piece It’s elegance and meaning in one perfect piece!"
+            review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to customize every detail made it feel truly mine. It's elegance and meaning in one perfect piece It's elegance and meaning in one perfect piece!"
             imageURL={NewArrivalWomen}
           />
         </div>
@@ -541,6 +548,27 @@ const AvailableComponentsExample = () => {
             imageUrl={NewArrivalMan}
             rating={3}
             name="Prince Chijioke"
+          />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          Item Collection Component
+        </Typography>
+        <div className="my-14 flex flex-col md:flex-row gap-4 bg-LB50 ">
+          <ItemCollection
+            imageURL={watch}
+            title="Eden Wood Watch"
+            price="450.00"
+          />
+          <ItemCollection
+            imageURL={watch2}
+            title="Eden Chrono Elite"
+            price="650.00"
+            href="/products/eden-chrono-elite"
           />
         </div>
       </div>
