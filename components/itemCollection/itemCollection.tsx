@@ -26,7 +26,7 @@ export const ItemCollection = ({
           src={imageURL}
           alt={title}
           priority
-          className="group-hover:scale-105 transition-transform duration-300"
+          className="group-hover:scale-105 transition-transform duration-300 min-h-96"
         />
       </div>
       <div className="mt-3 flex flex-col gap-1 mx-2">
