@@ -11,6 +11,12 @@ import logoTextVerticalWhite from "./logoTextVWhite.png";
 import logoTextHorizontalBlack from "./logoTextHBlack.png";
 import logoTextHorizontalWhite from "./logoTextHWhite.png";
 import logoTextHorinzontalYellow from "./logoTextHYellow.png";
+import NewArrivalMan from "./NewArrivalMan.jpeg";
+import NewArrivalWomen from "./NewArrivalWomen.jpeg";
+import noImage from "./no-image.png";
+import largeWatch from "./largeWatch.jpeg";
+import watch from "./Watch.jpeg";
+import watch2 from "./Watch2.jpeg";
 
 export {
   NotFoundImg,
@@ -23,4 +29,10 @@ export {
   logoTextHorizontalBlack,
   logoTextHorizontalWhite,
   logoTextHorinzontalYellow,
+  NewArrivalMan,
+  NewArrivalWomen,
+  noImage,
+  largeWatch,
+  watch,
+  watch2,
 };
