@@ -6,7 +6,7 @@ import { cn } from "@/utils/helpers";
 import { Typography } from "../typography";
 
 interface CheckboxProps {
-  label?: string;
+  label?: string | React.ReactNode;
   disabled?: boolean;
   checked?: boolean;
   indeterminate?: boolean;
@@ -31,13 +31,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
   const ref = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={cn(
-      "flex items-center gap-2", 
-    )}>
+    <div className={cn("flex items-start gap-2")}>
       <span
-        className={cn(
-          "relative flex h-4 w-4 cursor-pointer items-center",
-        )}
+        className={cn("relative flex h-4 w-4 cursor-pointer items-start")}
         onClick={() => !disabled && ref.current?.click()}
       >
         <input
@@ -54,8 +50,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
         <div
           className={cn(
             "flex h-4 w-4 items-center justify-center rounded-sm border-2",
-            checked ? "border-B400 bg-B400" : "border-gray-500 bg-white",
-            disabled && "bg-B75 text-N70 border-B75  cursor-not-allowed",
+            checked ? "border-BR400 bg-BR400" : "border-gray-500 bg-white",
+            disabled && "bg-BR75 text-N70 border-BR75  cursor-not-allowed"
           )}
         >
           {indeterminate ? <IndeterminateMark /> : checked ? <Mark /> : null}
@@ -65,10 +61,10 @@ const Checkbox: React.FC<CheckboxProps> = ({
         htmlFor={id}
         className={cn(
           `cursor-pointer ${labelClassName}`,
-          disabled && "opacity-50 cursor-not-allowed",
+          disabled && "opacity-50 cursor-not-allowed"
         )}
       >
-        <Typography variant="c-s">{label}</Typography>
+        <Typography variant={"c-m"}>{label}</Typography>
       </label>
     </div>
   );

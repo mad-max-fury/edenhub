@@ -109,7 +109,9 @@
     /*Text colors*/
     --color-text-default: hsl(0, 0%, 23%); /* hex color : #091E42 */
     --color-text-light: hsl(218, 31%, 30%); /* hex color :  */
+    --color-text-gray-normal: hsl(0, 0%, 50%); /* hex color : #808080 */
 
+    --color-text-gray-darker: hsl(0, 0%, 18%); /*hex color  #2D2D2D*/
     /* toggle button styles  */
 
     --ds-background-success-bold: hsl(216, 100%, 40%) !important;

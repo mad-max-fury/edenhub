@@ -64,6 +64,24 @@ const buttonVariants = cva(" transition-all ease-in-out duration-400", {
       className:
         "bg-transparent text-R400 border border-R400 hover:border-transparent hover:text-N0",
     },
+    {
+      types: "outline",
+      variant: "brown",
+      className:
+        "bg-transparent text-BR400 border border-BR400 hover:border-transparent hover:text-N0",
+    },
+    {
+      types: "outline",
+      variant: "brown-light",
+      className:
+        "bg-transparent text-BR300 border border-BR300 hover:border-transparent hover:text-N0",
+    },
+    {
+      types: "outline",
+      variant: "gold",
+      className:
+        "bg-transparent text-LB400 border border-LB400 hover:border-transparent hover:text-N0",
+    },
   ],
   defaultVariants: {
     variant: "primary",
