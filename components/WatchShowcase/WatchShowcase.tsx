@@ -43,13 +43,11 @@ export const WatchShowcase: React.FC<HeroSectionProps> = ({
         <Button
           variant="secondary"
           types="outline"
-          className="text-N0 md:max-w-42 py-5 rounded-none  text-[16px]"
+          className="text-N0 md:max-w-42 py-5 rounded-none   hover:text-N700"
         >
-          START CUSTOMIZING
+          {buttonText}
         </Button>
       </div>
     </div>
   );
 };
-
-
