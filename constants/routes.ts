@@ -4,14 +4,13 @@ const LandingPages = {
   ABOUT: "/about",
   SHOP: "/shop",
 };
+
 const AuthPages = {
-  LOGIN: "/auth/login",
-  SIGNUP: "/auth/signup",
-  CONFIRM_LOGIN: "/auth/confirm-login",
-  FORGOT_PASSWORD: "/auth/forgot-password",
-  RESET_PASSWORD: "/auth/reset-password",
-  CREATE_PASSWORD: "/auth/create-password",
-  VERIFICATION_CONFIRMATION: "/auth/verification-confirmation",
+  LOGIN: "/c/login",
+  SIGNUP: "/c/sign-up",
+  FORGOT_PASSWORD: "/c/forgot-password",
+  RESET_PASSWORD: "/c/create-new-password",
+  VERIFY_OTP: "/c/verify-otp",
 };
 
 const OldStaffPages = {
@@ -89,5 +88,4 @@ export const AuthRouteConfig = {
   ...LandingPages,
   ...AuthPages,
   ...StaffPages,
-  ...OldStaffPages,
 };

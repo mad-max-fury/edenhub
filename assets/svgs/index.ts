@@ -46,6 +46,8 @@ import CartIcon from "./cart.svg";
 import UserIcon from "./userIcon.svg";
 import GoogleIcon from "./google.svg";
 
+import MessageNotifIcon from "./message-notif.svg";
+
 export {
   HamburgerIcon,
   AngleLeft,
@@ -87,4 +89,5 @@ export {
   CartIcon,
   UserIcon,
   GoogleIcon,
+  MessageNotifIcon
 };

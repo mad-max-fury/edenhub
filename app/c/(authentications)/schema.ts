@@ -17,6 +17,7 @@ export const LoginSchema = yup.object().shape({
       /[!@#$%^&*(),.?":{}|<>]/,
       `Password must contain at least one special character (${specialChars})`
     ),
+  keepUserSignedIn: yup.boolean().optional(),
 });
 
 export const createNewPasswordSchema = yup.object().shape({
@@ -37,9 +38,9 @@ export const createNewPasswordSchema = yup.object().shape({
 });
 
 export const signupSchema = yup.object().shape({
-  firstName: yup.string().optional(),
+  firstName: yup.string().required("First name is required"),
   middleName: yup.string().optional(),
-  lastName: yup.string().optional(),
+  lastName: yup.string().required("Last name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
     .string()
@@ -58,6 +59,7 @@ export const signupSchema = yup.object().shape({
   agreedToTerms: yup
     .boolean()
     .oneOf([true], "You must agree to the terms and privacy policy"),
+  notificationTerms: yup.boolean().optional(),
 });
 
 export const forgotPasswordSchema = yup.object().shape({
