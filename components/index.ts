@@ -53,3 +53,5 @@ export * from "./Reviewer/reviewer";
 export * from "./ReviwerRating/ReviwerRating";
 export * from "./itemCollection/itemCollection";
 export * from "./WatchShowcase/WatchShowcase";
+export * from "./landingTab/LandingTab";
+export * from "./testimonialCard/TestimonialCard";

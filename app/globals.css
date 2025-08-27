@@ -26,6 +26,7 @@
     --color-BR300: hsl(19, 22%, 33%); /* hex color : #664D3E */
     --color-BR400: hsl(17, 22%, 37%); /* hex color : #74564A */
     --color-BR500: hsl(19, 22%, 17%); /* hex color : #342721 */
+    --color-BR900: hsla(17, 22%, 21%, 1) /* hex color: #42312A*/
 
     /* Blue */
     --color-B50: hsl(213, 100%, 93%); /* hex color : #dbebff */
