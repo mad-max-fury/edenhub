@@ -8,7 +8,7 @@ import {
   DownloadIcon,
   ErrorIcon,
   FileIcon,
-  LoadingIcon,
+
 } from "../../assets/svgs";
 
 interface FileUploadPreviewProps {
@@ -43,7 +43,7 @@ const FileUploadPreview: React.FC<FileUploadPreviewProps> = ({
     >
       {state === "loading" ? (
         <div className="relative h-6 w-6">
-          <LoadingIcon className="absolute left-[10%] top-[10%] animate-spin" />
+          {/* <LoadingIcon className="absolute left-[10%] top-[10%] animate-spin" /> */}
         </div>
       ) : state === "download" ? (
         <DownloadIcon />

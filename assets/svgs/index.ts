@@ -44,6 +44,10 @@ import DownloadIconTwo from "./downloadIconTwo.svg";
 
 import CartIcon from "./cart.svg";
 import UserIcon from "./userIcon.svg";
+import GoogleIcon from "./google.svg";
+
+import MessageNotifIcon from "./message-notif.svg";
+import GoldLogoIcon from "./goldLogo.svg";
 
 export {
   HamburgerIcon,
@@ -85,4 +89,7 @@ export {
   DownloadIconTwo,
   CartIcon,
   UserIcon,
+  GoogleIcon,
+  MessageNotifIcon,
+  GoldLogoIcon
 };
