@@ -1,7 +1,3 @@
-import { ApplyForLeaveFormData } from "@/app/staff/leave/(leave-application-group)/apply/components/ApplyForLeaveForm";
-
-
-
 import { ILeaveApprovalStatus, IPaginationResponse } from "../interface";
 
 
@@ -67,18 +63,10 @@ export interface ICreateLeavePayload {
     label: string;
     value: string;
   };
-  leaveTypeId:string;
+  leaveTypeId: string;
 }
 
-export interface ICreateEmployeeLeavePayload
-  extends Omit<
-    ApplyForLeaveFormData,
-    | "reliefStaffId"
-    | "leaveId"
-    | "supervisorId"
-    | "hodId"
-    | "payLeaveAllowance"
-  > {
+export interface ICreateEmployeeLeavePayload {
   reliefStaffId: string;
   leaveId: string;
   supervisorId: string;

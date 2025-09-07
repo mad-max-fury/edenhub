@@ -27,13 +27,13 @@ export const WatchShowcase: React.FC<HeroSectionProps> = ({
 			/>
 			<div className="absolute inset-0 bg-black/60"></div>
 
-			<div className="relative  flex flex-col justify-center items-center text-white px-4 max-w-3xl space-y-5">
+			<div className="relative flex flex-col justify-center items-center text-white px-4 max-w-3xl space-y-5">
 				<Typography
 					variant="h-l"
 					fontWeight={"medium"}
 					color="N0"
 					align="center"
-					className="text-N0 lg:text-5xl"
+					className="text-N0"
 				>
 					{title}
 				</Typography>
@@ -45,7 +45,7 @@ export const WatchShowcase: React.FC<HeroSectionProps> = ({
 					<Button
 						variant="secondary"
 						types="outline"
-						className="text-N0 md:max-w-42 py-5 rounded-none  text-[16px]"
+						className="text-N0 md:max-w-42 py-5 rounded-none text-base"
 						onClick={onButtonClick}
 					>
 						{buttonText}

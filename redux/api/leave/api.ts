@@ -3,7 +3,6 @@ import { baseApi } from "@/redux/baseApi";
 import { tagTypes } from "@/redux/baseApi/tagTypes";
 
 import { IEmployeeLeaveProps } from "../dashboard";
-import { IGetEmployeeLeavesRequest } from "../employee";
 import { IPaginationQuery } from "../interface";
 import {
   IApproveOrRejectLeavePayload,
@@ -123,17 +122,6 @@ const authApi = baseApi.injectEndpoints({
         { type: tagTypes.EMPLOYEE_LEAVE_APPLICATIONS },
       ],
     }),
-    getEmployeeLeaveApplications: builder.query<
-      Response<IPaginatedEmployeeLeavesResponse>,
-      IGetEmployeeLeavesRequest
-    >({
-      query: (params) => ({
-        url: `${baseName}/employee-leave-applications`,
-        method: "GET",
-        params,
-      }),
-      providesTags: [{ type: tagTypes.EMPLOYEE_LEAVE_APPLICATIONS }],
-    }),
     getLeaveApplicationDetails: builder.query<
       Response<IGetEmployeeLeaveItem>,
       {
@@ -172,28 +160,6 @@ const authApi = baseApi.injectEndpoints({
         params,
       }),
     }),
-    getDirectReportsLeaveApplications: builder.query<
-      Response<IPaginatedEmployeeLeavesResponse>,
-      IGetEmployeeLeavesRequest
-    >({
-      query: (params) => ({
-        url: `${baseName}/supervisor-direct-leave-applications`,
-        method: "GET",
-        params,
-      }),
-      providesTags: [{ type: tagTypes.DIRECT_REPORTS_LEAVE_APPLICATIONS }],
-    }),
-    getTeamLeaveApplications: builder.query<
-      Response<IPaginatedEmployeeLeavesResponse>,
-      IGetEmployeeLeavesRequest
-    >({
-      query: (params) => ({
-        url: `${baseName}/hod-direct-leave-applications`,
-        method: "GET",
-        params,
-      }),
-      providesTags: [{ type: tagTypes.TEAM_LEAVE_APPLICATIONS }],
-    }),
     approveOrRejectLeaveAppliction: builder.mutation<
       Response,
       IApproveOrRejectLeavePayload
@@ -221,13 +187,10 @@ export const {
   useDeleteLeaveTypeMutation,
   useGetEmployeeLeaveQuery,
   useCreateEmpoyeeLeaveMutation,
-  useGetEmployeeLeaveApplicationsQuery,
   useDeleteEmployeeLeaveApplicationsMutation,
   useGetLeaveApplicationDetailsQuery,
   useLazyGetLeaveApplicationDetailsQuery,
   useGetSupervisorAndHODStatusQuery,
-  useGetDirectReportsLeaveApplicationsQuery,
-  useGetTeamLeaveApplicationsQuery,
   useApproveOrRejectLeaveApplictionMutation,
   useGetLeaveDaysQuery,
 } = authApi;
