@@ -13,7 +13,7 @@ export const TestimonialCard = ({
 	comment,
 }: TestimonialCardProps) => {
 	return (
-		<div className="px-5 py-9 border border-[#D8D8D8] flex flex-col justify-between relative gap-4 lg:h-[331px]">
+		<div className="my-9 py-9 px-5 border border-[#D8D8D8] flex flex-col justify-between relative gap-4 lg:h-[331px]">
 			<Image
 				src={image}
 				alt={`${name} picture`}
