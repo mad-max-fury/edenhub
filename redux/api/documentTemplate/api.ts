@@ -2,7 +2,6 @@ import { Response } from "@/redux/api/genericInterface";
 import { baseApi } from "@/redux/baseApi";
 import { tagTypes } from "@/redux/baseApi/tagTypes";
 
-import { IFormTemplateResponse } from "../employee";
 import { IPaginationQuery } from "../interface";
 import {
   ICreateDocumntTemplatePayload,
@@ -68,12 +67,6 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: tagTypes.DOCUMENT_TEMPLATE }],
     }),
-    getDocumentFormUrl: builder.query<Response<IFormTemplateResponse>, string>({
-      query: (id) => ({
-        url: `${baseName}/document-url/${id}`,
-        method: "GET",
-      }),
-    }),
   }),
 });
 
@@ -83,5 +76,4 @@ export const {
   useGetAllDocumentTemplateQuery,
   useGetAllUnpaginatedDocumentTemplateQuery,
   useDeleteDocumentTemplateMutation,
-  useLazyGetDocumentFormUrlQuery,
 } = authApi;
