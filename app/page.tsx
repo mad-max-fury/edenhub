@@ -140,7 +140,7 @@ export default function Home() {
 						variant="p-xl"
 						fontWeight="medium"
 						color="gray-darker"
-						className="capitalize text-lg lg:text-[4rem] flex-shrink-0"
+						className="capitalize !text-xl lg:!text-[4rem] flex-shrink-0"
 					>
 						featured products
 					</Typography>
@@ -202,12 +202,12 @@ export default function Home() {
 			</section>
 
 			{/* Testimonials */}
-			<section className="bg-LB50 px-10 py-16 flex flex-col gap-10">
+			<section className="bg-LB50 px-4 lg:px-10 py-16 flex flex-col gap-10">
 				<Typography
 					variant="p-xl"
 					fontWeight="medium"
 					color="gray-darker"
-					className="capitalize text-lg lg:text-[4rem] flex-shrink-0"
+					className="capitalize text-3xl lg:!text-[4rem] flex-shrink-0"
 				>
 					testimonials
 				</Typography>
