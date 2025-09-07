@@ -9,7 +9,9 @@ import { SideBar } from "../sideBar/sideBar";
 import { Button } from "../buttons";
 import { CartIcon } from "@/assets/svgs";
 import { GlobalSearchDropdown } from "../globalSearch/globalSearch";
+
 const pathToMatch = "/";
+
 export const GlobalMenu = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const pathname = usePathname();
@@ -35,7 +37,7 @@ export const GlobalMenu = () => {
 		<>
 			<nav
 				className={cn(
-					"sticky left-0 right-0 top-0 isolate z-30 flex items-center justify-between px-[clamp(12px,_3vw,_24px)] transition-colors duration-300 ease-in-out py-5 lg:py-9",
+					"sticky left-0 right-0 top-0 isolate z-30 flex items-center justify-between px-[clamp(12px,_3vw,_24px)] transition-colors duration-300 ease-in-out py-5",
 					pathname === pathToMatch && (isScrolled ? "bg-N0" : "bg-transparent"),
 					pathname !== pathToMatch && "bg-N0"
 				)}
