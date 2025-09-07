@@ -1,0 +1,34 @@
+export interface ISignInPayload {
+  email: string;
+  password: string;
+  keepUserSignedIn?: boolean;
+}
+
+export interface ICreateNewPasswordFormData {
+  password: string;
+  confirmPassword: string;
+}
+
+export interface ISignUpPayload {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  agreedToTerms?: boolean;
+  notificationTerms?: boolean;
+}
+
+export interface IForgotPasswordPayload {
+  email: string;
+}
+
+export interface IVerifyOtpPayload {
+  otp: string;
+}
+
+export interface IForgotPasswordFilterProps {
+  isSubmitted: boolean;
+  email: string;
+}
