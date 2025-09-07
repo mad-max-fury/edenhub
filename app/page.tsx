@@ -16,7 +16,6 @@ import {
 	ItemCollection,
 	LandingTab,
 	TestimonialCard,
-	TextField,
 	Typography,
 	WatchShowcase,
 } from "@/components";
@@ -89,14 +88,14 @@ export default function Home() {
 	};
 
 	return (
-		<main className="w-full">
+		<main className="w-full max-w-[1440px] mx-auto">
 			<section
-				className=" bg-cover bg-center h-screen w-full flex flex-col "
+				className=" bg-cover bg-center h-screen max-h-[1440px] w-full flex flex-col "
 				style={{ backgroundImage: `url(${heroImg.src})` }}
 			>
 				<GlobalMenu />
-				<div className="flex items-center justify-center pt-[214px] pb-[288px]">
-					<div className="flex flex-col justify-center items-center gap-6 w-[620px]">
+				<div className="flex items-center justify-center pt-[214px] pb-72">
+					<div className="flex flex-col justify-center items-center gap-6 w-[38.75rem]">
 						<Typography
 							variant="h-xxl"
 							fontWeight="medium"
@@ -141,12 +140,12 @@ export default function Home() {
 						variant="p-xl"
 						fontWeight="medium"
 						color="gray-darker"
-						className="capitalize text-lg lg:text-[4rem] flex-shrink-0"
+						className="capitalize !text-xl lg:!text-[4rem] flex-shrink-0"
 					>
 						featured products
 					</Typography>
 
-					<button className="capitalize  md:text-xl text-BR500 underline cursor-pointer flex-shrink-0">
+					<button className="capitalize md:text-xl text-BR500 underline cursor-pointer flex-shrink-0">
 						view market place
 					</button>
 				</div>
@@ -165,7 +164,7 @@ export default function Home() {
 					</div>
 
 					{filteredProducts?.length !== 0 ? (
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 justify-items-center">
 							{filteredProducts.map((product) => (
 								<ItemCollection
 									key={product?.id}
@@ -187,7 +186,7 @@ export default function Home() {
 			</section>
 
 			{/* New arrival */}
-			<section className="flex items-center gap-5 py-16 px-40 bg-LB50">
+			<section className="grid grid-cols-1 md:grid-cols-2 gap-5 py-16 px-6 lg:px-40 bg-LB50 justify-items-center">
 				<ImageOverlay imageURL={NewArrivalMan} />
 				<ImageOverlay imageURL={NewArrivalWomen} mainText="WOMAN" />
 			</section>
@@ -203,17 +202,17 @@ export default function Home() {
 			</section>
 
 			{/* Testimonials */}
-			<section className="bg-LB50 px-10 py-16 flex flex-col gap-10">
+			<section className="bg-LB50 px-4 lg:px-10 py-16 flex flex-col gap-10">
 				<Typography
 					variant="p-xl"
 					fontWeight="medium"
 					color="gray-darker"
-					className="capitalize text-lg lg:text-[4rem] flex-shrink-0"
+					className="capitalize text-3xl lg:!text-[4rem] flex-shrink-0"
 				>
 					testimonials
 				</Typography>
 
-				<div className="mt-20 grid grid-cols-1 lg:grid-cols-3 items-center gap-20 lg:gap-4">
+				<div className="mt-20 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 items-center gap-20 lg:gap-4">
 					{LANDING_TESTIMONIALS.map((testimonial) => (
 						<TestimonialCard
 							key={testimonial.id}
@@ -232,14 +231,14 @@ export default function Home() {
 						<Typography
 							fontWeight="medium"
 							color="gray-darker"
-							className="capitalize text-[4rem] text-center leading-[100%]"
+							className="capitalize text-3xl md:!text-5xl text-center leading-[100%]"
 						>
 							FAQs
 						</Typography>
 						<Typography
 							variant="p-xl"
 							color="BR500"
-							className="leading-[26px] text-center w-11/12 lg:w-3/5"
+							className="leading-[26px] tracking-[-1%] text-center w-11/12 lg:w-3/5"
 						>
 							Find everything you need to know about ordering, customization, shipping,
 							returns, and more. If you need further assistance, our team is here to
@@ -281,7 +280,7 @@ export default function Home() {
 				<Typography
 					fontWeight="medium"
 					color="gray-darker"
-					className="capitalize text-[4rem] text-center leading-[100%]"
+					className="capitalize text-3xl md:!text-5xl text-center leading-[100%]"
 				>
 					Stay Timeless. <br />
 					Stay Exclusive.

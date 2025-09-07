@@ -1,12 +1,8 @@
-import {
-  IBioDataProps,
-  IGetEmployeeEnrollmentRes,
-  ITaxPensionsResponseProps,
-} from "@/redux/api";
+
 
 export const mapEmployeeEnrollmentToBioData = (
-  enrollmentData: IGetEmployeeEnrollmentRes,
-): IBioDataProps => {
+  enrollmentData: any
+) => {
   const { employeeBioData } = enrollmentData;
   return {
     staffId: "",
@@ -82,7 +78,7 @@ export const mapEmployeeEnrollmentToBioData = (
       relationship: employeeBioData.employeeNextOfKin.relationship,
     },
     employeeEmploymenHistory: employeeBioData.employeeEmploymentHistory?.map(
-      (history) => ({
+      (history: any) => ({
         position: history.position,
         organisation: history.organisation,
         from: history.from,
@@ -90,7 +86,7 @@ export const mapEmployeeEnrollmentToBioData = (
       }),
     ),
     employeeAcademicBackground: employeeBioData.employeeAcademicBackground.map(
-      (academic) => ({
+      (academic: any) => ({
         school: academic.school,
         major: academic.major,
         qualificationId: academic.qualificationId,
@@ -101,7 +97,7 @@ export const mapEmployeeEnrollmentToBioData = (
       }),
     ),
     employeeProfessionaQualification:
-      employeeBioData.employeeProfessionaQualification.map((qual) => ({
+      employeeBioData.employeeProfessionaQualification.map((qual: any) => ({
         institution: qual.institution,
         qualification: qual.qualification,
         from: qual.from,
@@ -109,7 +105,7 @@ export const mapEmployeeEnrollmentToBioData = (
         certificate: qual.certificate,
       })),
     employeeTrainingCertificate:
-      employeeBioData?.employeeTrainingCertificate?.map((cert) => ({
+      employeeBioData?.employeeTrainingCertificate?.map((cert: any) => ({
         name: cert.name,
         institution: cert.institution,
         location: cert.location,
@@ -120,14 +116,14 @@ export const mapEmployeeEnrollmentToBioData = (
     employeeTaxAndPension: {
       taxId: employeeBioData?.employeeTaxAndPension?.taxId || "",
       fundsAdministrator:
-        (employeeBioData?.employeeTaxAndPension as ITaxPensionsResponseProps)
+        (employeeBioData?.employeeTaxAndPension)
           ?.fundsAdministrator || "",
       fundsAdministratorId:
-        (employeeBioData?.employeeTaxAndPension as ITaxPensionsResponseProps)
+        (employeeBioData?.employeeTaxAndPension)
           ?.fundsAdministratorId || "",
       pensionPin: employeeBioData.employeeTaxAndPension.pensionPin || "",
       nhs:
-        (employeeBioData?.employeeTaxAndPension as ITaxPensionsResponseProps)
+        (employeeBioData?.employeeTaxAndPension)
           ?.nhs || "",
     },
   };

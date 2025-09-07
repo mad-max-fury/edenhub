@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { ApplyForLeaveFormData } from "@/app/staff/leave/(leave-application-group)/apply/components/ApplyForLeaveForm";
 
-export interface ModifiedApplyForLeaveFormData
-  extends Omit<
-    ApplyForLeaveFormData,
-    "medicalCertificate" | "sickCertificate" | "examinationTimeTable"
-  > {
+
+export interface ModifiedApplyForLeaveFormData {
   medicalCertificate?: string;
   sickCertificate?: string;
   examinationTimeTable?: string;

@@ -19,16 +19,16 @@ export const ItemCollection = ({
 	href = "#",
 }: ItemCollectionProps) => {
 	return (
-		<Link href={href} className="max-w-80 min-h-[400px] group">
-			<div className="relative overflow-hidden w-full">
+		<Link href={href} className="max-w-80 h-[30rem] flex flex-col group">
+			<div className="relative overflow-hidden w-full h-[30rem]">
 				<Image
 					src={imageURL}
 					alt={title}
 					priority
-					className="group-hover:scale-105 transition-transform duration-300 h-[416px]"
+					className="group-hover:scale-105 transition-transform duration-300 w-full h-full object-center"
 				/>
 			</div>
-			<div className="mt-3 flex flex-col gap-1 mx-2">
+			<div className="mt-3 mx-2 flex flex-col gap-1">
 				<Typography
 					fontWeight={"bold"}
 					color={"N700"}

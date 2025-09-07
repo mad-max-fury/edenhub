@@ -7,7 +7,6 @@ export * from "./jobTitle";
 export * from "./roleClaims";
 export * from "./businessUnit";
 export * from "./menus";
-export * from "./employee";
 export * from "./dashboard";
 export * from "./leave";
 export * from "./appraisal";
