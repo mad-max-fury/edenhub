@@ -53,21 +53,6 @@ const AuthWrapper = ({
 			<div className=" mx-auto w-full ">{children}</div>
 			{!hideFooter && (
 				<div className="flex flex-col items-center w-full justify-center mx-auto gap-4">
-					{!hideAuthOptions && (
-						<>
-							<div className="w-full flex items-center mb-5 gap-[18px]">
-								<hr className="flex-1 h-[1px]" />
-								<span> Or</span>
-								<hr className="flex-1 h-[1px]" />
-							</div>
-							<Button variant={"brown"} types={"outline"} className="w-full group">
-								<div className="flex text-base items-center gap-4 ">
-									<GoogleIcon className={`[&>path]:group-hover:fill-white`} />{" "}
-									<small>Continue with Google</small>
-								</div>
-							</Button>
-						</>
-					)}
 					<Typography
 						color="gray-normal"
 						variant="p-m"

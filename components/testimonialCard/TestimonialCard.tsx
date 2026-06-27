@@ -1,30 +1,40 @@
 import Image, { StaticImageData } from "next/image";
-import { Typography } from "../typography";
+import { Star, Quote } from "lucide-react";
 
 interface TestimonialCardProps {
 	image: string | StaticImageData;
 	name: string;
 	comment: string;
+	rating?: number;
 }
 
 export const TestimonialCard = ({
 	image,
 	name,
 	comment,
+	rating = 5,
 }: TestimonialCardProps) => {
+	const rounded = Math.round(rating);
 	return (
-		<div className="my-9 py-9 px-5 border border-[#D8D8D8] flex flex-col justify-between relative gap-4 lg:h-[331px]">
-			<Image
-				src={image}
-				alt={`${name} picture`}
-				className="size-[92px] absolute -top-16 left-6"
-			/>
-
-			<Typography className="mt-12 leading-[26px]">{`“${comment}”`}</Typography>
-
-			<Typography className="uppercase text-gray-normal" fontWeight="medium">
-				{name}
-			</Typography>
+		<div className="bg-white rounded-lg p-6 flex flex-col gap-4 h-full">
+			<div className="flex items-center gap-3">
+				<Image
+					src={image}
+					alt={`${name}`}
+					width={44}
+					height={44}
+					className="w-11 h-11 rounded-full object-cover shrink-0"
+				/>
+				<div className="min-w-0">
+					<p className="text-sm font-medium text-N900 truncate">{name}</p>
+					<span className="flex items-center gap-0.5 mt-0.5">
+						{Array.from({ length: 5 }).map((_, i) => (
+							<Star key={i} size={12} className={i < rounded ? "fill-amber-400 text-amber-400" : "text-N200"} />
+						))}
+					</span>
+				</div>
+			</div>
+			<p className="text-sm text-N600 leading-relaxed flex-1">&ldquo;{comment}&rdquo;</p>
 		</div>
 	);
 };
