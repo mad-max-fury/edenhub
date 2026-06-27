@@ -13,6 +13,8 @@ import {
 	useSetDefaultAddressMutation,
 	type IAddressPayload,
 } from "@/redux/api/account";
+import { useValidateAddressMutation } from "@/redux/api/orders";
+import { AddressAutocomplete } from "@/components/addressAutocomplete/AddressAutocomplete";
 
 const blank: IAddressPayload = {
 	firstName: "", lastName: "", phone: "", additionalPhone: "",
@@ -41,11 +43,23 @@ const AddressBook = () => {
 		setEditingId(id); setShowForm(true);
 	};
 
+	const [validateAddress, { isLoading: validatingAddr }] = useValidateAddressMutation();
+
 	const save = async () => {
 		if (!form.firstName || !form.lastName || !form.phone || !form.address || !form.city || !form.state) { notify.error({ message: "Please fill all required fields" }); return; }
+		let payload = { ...form };
 		try {
-			if (editingId) { await updateAddress({ id: editingId, data: form }).unwrap(); notify.success({ message: "Address updated" }); }
-			else { await addAddress(form).unwrap(); notify.success({ message: "Address added" }); }
+			const res = await validateAddress({
+				name: `${form.firstName} ${form.lastName}`,
+				email: "",
+				phone: form.phone,
+				address: `${form.address}, ${form.city}, ${form.state}, ${form.country || "Nigeria"}`,
+			}).unwrap();
+			payload.addressCode = res.data.addressCode;
+		} catch {}
+		try {
+			if (editingId) { await updateAddress({ id: editingId, data: payload }).unwrap(); notify.success({ message: "Address updated" }); }
+			else { await addAddress(payload).unwrap(); notify.success({ message: "Address added" }); }
 			setShowForm(false);
 		} catch (err) { notify.error({ message: "Save failed", subtitle: getApiErrorMessage(err) }); }
 	};
@@ -118,7 +132,9 @@ const AddressBook = () => {
 				footerData={
 					<div className="flex gap-3 justify-end">
 						<Button variant="gold" onClick={() => setShowForm(false)}>Cancel</Button>
-						<Button variant="brown-light" loading={adding || updating} onClick={save}>{editingId ? "Update" : "Save"}</Button>
+						<Button variant="brown-light" loading={adding || updating || validatingAddr} onClick={save}>
+							{validatingAddr ? "Validating…" : editingId ? "Update" : "Save"}
+						</Button>
 					</div>
 				}
 			>
@@ -127,7 +143,25 @@ const AddressBook = () => {
 					{field("lastName", "Last Name", { required: true })}
 					{field("phone", "Phone", { required: true })}
 					{field("additionalPhone", "Additional Phone")}
-					{field("address", "Address", { span2: true, required: true })}
+					<div className="sm:col-span-2">
+						<label className="text-xs text-N500 block mb-1">Address <span className="text-R400">*</span></label>
+						<AddressAutocomplete
+							value={form.address}
+							onChange={(v) => set("address", v)}
+							onSelect={(result) => {
+								setForm((f) => ({
+									...f,
+									address: result.address,
+									city: result.city || f.city,
+									state: result.state || f.state,
+									country: result.country || f.country || "Nigeria",
+									postalCode: result.postalCode || f.postalCode,
+								}));
+							}}
+							placeholder="Start typing your address…"
+							className="w-full border border-N40 rounded px-3 py-2.5 text-sm focus:border-BR400 outline-none"
+						/>
+					</div>
 					{field("landmark", "Landmark", { span2: true })}
 					{field("country", "Country", { required: true })}
 					{field("state", "Region (State)", { required: true })}

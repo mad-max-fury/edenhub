@@ -15,6 +15,17 @@ const baseName = "/order";
 
 const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    validateAddress: builder.mutation<
+      Response<{ addressCode: string }>,
+      { name: string; email: string; phone: string; address: string }
+    >({
+      query: (data) => ({
+        url: `${baseName}/validate-address`,
+        method: "POST",
+        data,
+      }),
+    }),
+
     fetchRates: builder.mutation<
       Response<IFetchRatesResult>,
       { receiver: IReceiverAddress; items: IOrderItemInput[] }
@@ -75,6 +86,7 @@ const orderApi = baseApi.injectEndpoints({
 
 export const {
   useFetchRatesMutation,
+  useValidateAddressMutation,
   useCreateOrderMutation,
   useGetMyOrdersQuery,
   useGetMyOrderQuery,
