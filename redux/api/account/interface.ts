@@ -11,6 +11,7 @@ export interface IAddress {
   state: string;
   country: string;
   postalCode?: string;
+  addressCode?: string;
   isDefault: boolean;
 }
 
@@ -26,5 +27,6 @@ export interface IAddressPayload {
   state: string;
   country?: string;
   postalCode?: string;
+  addressCode?: string;
   isDefault?: boolean;
 }
