@@ -56,6 +56,8 @@ const config: Config = {
         "c-s": ["0.75rem", { lineHeight: "12px", fontWeight: 700 }],
       },
       colors: {
+        "gray-normal": "var(--color-text-gray-normal)",
+        "gray-darker":"var(--color-text-gray-darker)",
         // Bg
         default: "var(--color-bg)",
         card: "var(--color-bg50)",
@@ -160,7 +162,7 @@ const config: Config = {
         "text-light": "var(--color-text-light)",
       },
       boxShadow: {
-        auth: "0 0 1px 0 #091E424F, 0 8px 12px 0 #091E424F",
+        auth: "0px 4px 50px 0px #0000000D",
       },
       dropShadow: {
         "image-drop-shadow": "-43px 46px 60px 0px #091E424F",
@@ -191,6 +193,9 @@ const config: Config = {
         },
         ".dropdown-menu-box-shadow": {
           "box-shadow": "0px 0px 1px 0px #091e424f, 0px 3px 5px 0px #091e4233",
+        },
+        "auth-shadow": {
+          "box-shadow": "0px 4px 50px 0px #0000000D",
         },
         ".sticky-column-shadow": {
           "box-shadow": "0px -1px 0px 0px #DDDDDD",

@@ -5,6 +5,13 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Chevron from "@/assets/svgs/chevron-down.svg";
 import {
+  largeWatch,
+  NewArrivalMan,
+  NewArrivalWomen,
+  watch,
+  watch2,
+} from "@/assets/images";
+import {
   Badge,
   Button,
   ButtonDropdown,
@@ -22,6 +29,11 @@ import {
   TextField,
   Typography,
   ValidationText,
+  ImageOverlay,
+  Reviewer,
+  ReviwerRating,
+  ItemCollection,
+  WatchShowcase,
 } from "@/components";
 import { queryParamsHelper } from "@/utils/helpers";
 
@@ -481,7 +493,103 @@ const AvailableComponentsExample = () => {
           <Badge variant="purple" text="New Feature" />
           <Badge variant="teal" text="Information" />
         </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N200"}
+          className="bg-R100"
+        >
+          Image Overlay Component
+        </Typography>
+        <div className="my-4 flex flex-col md:flex-row gap-4">
+          <ImageOverlay imageURL={NewArrivalMan} />
+          <ImageOverlay
+            imageURL={NewArrivalWomen}
+            mainText="WOMEN"
+            subText="NEW ARRIVAL"
+          />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          Review Component
+        </Typography>
+        <div className="my-14 flex flex-col md:flex-row gap-4 ">
+          <Reviewer
+            name="John Doe"
+            review="I've owned many luxury watches, but nothing compares to the craftsmanship and personal touch of my Eden Wood timepiece. The ability to WatchShowcase every detail made it feel truly mine. Worth every penny!"
+            imageURL={NewArrivalMan}
+          />
+          <Reviewer
+            name="Ginger"
+            review="From the moment I unboxed my Eden Wood bracelet and sunglasses, I knew I had made the right choice. The ability to WatchShowcase every detail made it feel truly mine. It's elegance and meaning in one perfect piece It's elegance and meaning in one perfect piece!"
+            imageURL={NewArrivalWomen}
+          />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          Review and Ratings Component
+        </Typography>
+        <div className="my-14 flex flex-col md:flex-row gap-4 bg-LB50 ">
+          <ReviwerRating
+            comment="The quality is outstanding, and the engraving made it uniquely mine. From packaging to design, everything felt premium. Definitely worth it!"
+            imageUrl={NewArrivalMan}
+            rating={4}
+            name="Prince Chijioke"
+          />
+          <ReviwerRating
+            comment="The quality is outstanding, and the engraving made it uniquely mine. From packaging to design, everything felt premium. Definitely worth it!"
+            imageUrl={NewArrivalMan}
+            rating={3}
+            name="Prince Chijioke"
+          />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          Item Collection Component
+        </Typography>
+        <div className="my-14 flex flex-col md:flex-row gap-4 bg-LB50 ">
+          <ItemCollection
+            imageURL={watch}
+            title="Eden Wood Watch"
+            price="450.00"
+          />
+          <ItemCollection
+            imageURL={watch2}
+            title="Eden Chrono Elite"
+            price="650.00"
+            href="/products/eden-chrono-elite"
+          />
+        </div>
+        <Typography
+          variant="h-xl"
+          fontWeight={"bold"}
+          color={"N300"}
+          className="bg-LB300"
+        >
+          WatchShowcase Component
+        </Typography>
+        <div className="my-14 flex flex-col md:flex-row gap-4 ">
+          <WatchShowcase
+            title="Own a Watch That Defines You"
+            subtitle="Create a luxury timepiece tailored to your style. Craftsmanship, prestige, and personalization—all in one watch."
+            buttonText="Start Customizing"
+            backgroundImage={largeWatch}
+          />
+        </div>
       </div>
+
       <Footer />
 
       <Modal

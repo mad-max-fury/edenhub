@@ -27,7 +27,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  keywords: "Buy watch, customize , watch, sunglasses, bracelets, gifts",
+  keywords: "Buy watch, customize, watch, sunglasses, bracelets, gifts",
 };
 
 export default function RootLayout({

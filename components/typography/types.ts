@@ -111,7 +111,10 @@ export type TypographyColors =
   //Text Colors
   | "text-default"
   | "text-light"
-  | "text-sec";
+  | "text-sec"
+  | "gray-normal"
+  | "gray-darker";
+
 
 export type TypographyAlign =
   | "start"

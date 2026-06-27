@@ -9,7 +9,7 @@ const buttonVariants = cva(" transition-all ease-in-out duration-400", {
   variants: {
     variant: {
       primary:
-        "bg-B400 hover:bg-B300 text-N0 disabled:bg-B75 disabled:text-N70  disabled:cursor-not-allowed", // blue
+        "bg-BR500 hover:bg-BR400 text-N0 disabled:bg-BR75 disabled:text-N20 disabled:cursor-not-allowed", // blue
       secondary:
         "bg-N20 text-N700 hover:bg-N40 disabled:opacity-50 hover:disabled:bg-N20 disabled:cursor-not-allowed", // extra light ash
       neutral:
@@ -23,7 +23,8 @@ const buttonVariants = cva(" transition-all ease-in-out duration-400", {
       gold: "bg-card hover:bg-LB400 text-N0 disabled:bg-LB75 disabled:text-N20 disabled:cursor-not-allowed", // brown
       "brown-light":
         "bg-BR400 hover:bg-BR300 text-N0 disabled:bg-BR75 disabled:text-N20 disabled:cursor-not-allowed", // brown light
-      plain: "",
+      plain:
+        "bg-transparent text-N0 hover:bg-N20 hover:text-BR500 disabled:bg-N20 disabled:text-N70 disabled:cursor-not-allowed border border-N0", // plain
     },
     size: {
       default: "p-[12px]",
@@ -39,6 +40,7 @@ const buttonVariants = cva(" transition-all ease-in-out duration-400", {
       none: "",
     },
   },
+
   compoundVariants: [
     {
       types: "outline",
@@ -62,6 +64,24 @@ const buttonVariants = cva(" transition-all ease-in-out duration-400", {
       variant: "danger",
       className:
         "bg-transparent text-R400 border border-R400 hover:border-transparent hover:text-N0",
+    },
+    {
+      types: "outline",
+      variant: "brown",
+      className:
+        "bg-transparent text-BR400 border border-BR400 hover:border-transparent hover:text-N0",
+    },
+    {
+      types: "outline",
+      variant: "brown-light",
+      className:
+        "bg-transparent text-BR300 border border-BR300 hover:border-transparent hover:text-N0",
+    },
+    {
+      types: "outline",
+      variant: "gold",
+      className:
+        "bg-transparent text-LB400 border border-LB400 hover:border-transparent hover:text-N0",
     },
   ],
   defaultVariants: {
@@ -90,14 +110,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       loading = false,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = "button";
     return (
       <Comp
         className={cn(
           buttonVariants({ variant, size, types, shape, className }),
-          "flex items-center justify-center gap-4"
+          "flex items-center justify-center gap-4",
         )}
         ref={ref}
         {...props}
@@ -119,7 +139,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </Comp>
     );
-  }
+  },
 );
 Button.displayName = "Button";
 

@@ -107,6 +107,8 @@ const colorClasses = {
   "text-default": "text-text-default",
   "text-light": "text-text-light",
   "text-sec": "text-default",
+  "gray-darker": "text-gray-darker",
+  "gray-normal": "text-gray-normal",
 };
 
 const typography = cva("", {

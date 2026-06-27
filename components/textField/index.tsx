@@ -43,7 +43,7 @@ const TextFieldComponent = <FV extends FieldValues>(
 
   const classes = clsx(
     className,
-    `block w-full text-sm bg-transparent text-N700 placeholder:text-N80 border rounded py-2 px-3 focus:outline-B100 focus:border-2 disabled:cursor-not-allowed disabled:bg-N20 disabled:text-N70  ${error ? "border-R400 border-2" : "border-N40"}`
+    `block w-full text-sm bg-transparent text-N700 placeholder:text-N80 border focus-within:border-BR100 rounded py-2 px-3 focus:outline-none focus:border-2 disabled:cursor-not-allowed disabled:bg-N20 disabled:text-N70  ${error ? "border-R400 border-2" : "border-N40"}`
   ); //generic styles for input
 
   const passwordClasses = clsx(`grow focus:outline-none`, className); //special styles for password input
@@ -51,11 +51,9 @@ const TextFieldComponent = <FV extends FieldValues>(
   const iconInputsClasses = clsx(`grow focus:outline-none`, className); //special; styles for icon inputs
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Call the register's onChange if it exists
     if ("onChange" in registerInput) {
       (registerInput as UseFormRegisterReturn<Path<FV>>).onChange(e);
     }
-    // Call the prop onChange if it exists
     rest.onChange?.(e);
   };
 
@@ -72,7 +70,7 @@ const TextFieldComponent = <FV extends FieldValues>(
             >
               <Typography
                 variant="h-s"
-                fontWeight="medium"
+                fontWeight="regular"
                 color={"N700"}
                 className={`cursor-pointer`}
               >
@@ -114,7 +112,7 @@ const TextFieldComponent = <FV extends FieldValues>(
           {label && label.toString().length > 0 && (
             <Typography
               variant="h-s"
-              fontWeight="medium"
+              fontWeight="regular"
               color={"N700"}
               className={`${flexStyle === "row" ? "mb-2 md:col-span-3 md:mb-0" : "mb-2"} cursor-pointer`}
             >
@@ -122,7 +120,7 @@ const TextFieldComponent = <FV extends FieldValues>(
             </Typography>
           )}
           <div
-            className={`mb-2 flex w-full items-center justify-normal rounded border px-3 py-2 focus-within:border-2 focus-within:border-B100 ${error ? "border-2 border-R400" : "border-N40"}`}
+            className={`mb-2 flex w-full items-center justify-normal rounded border px-3 py-2 focus-within:border-2 focus-within:border-BR100 ${error ? "border-2 border-R400" : "border-N40"}`}
           >
             <input
               className={iconInputsClasses}
@@ -150,7 +148,7 @@ const TextFieldComponent = <FV extends FieldValues>(
             {label && label.toString().length > 0 && (
               <Typography
                 variant="h-s"
-                fontWeight="medium"
+                fontWeight="regular"
                 color={"N700"}
                 className={`${flexStyle === "row" ? "col-span-3" : "mb-2"} cursor-pointer`}
               >
@@ -159,7 +157,7 @@ const TextFieldComponent = <FV extends FieldValues>(
             )}
             <div className={`${flexStyle === "row" && "col-span-9"}`}>
               <div
-                className={`mb-2 flex w-full items-center justify-normal rounded border px-3 py-2 focus-within:border-2 focus-within:border-B100 ${error ? "border-2 border-R400" : "border-N40"}`}
+                className={`mb-2 flex w-full items-center justify-normal rounded border px-3 py-2 focus-within:border-2 focus-within:border-BR100 ${error ? "border-2 border-R400" : "border-N40"}`}
               >
                 <input
                   className={passwordClasses}
@@ -196,7 +194,7 @@ const TextFieldComponent = <FV extends FieldValues>(
           {label && label.toString().length > 0 && (
             <Typography
               variant="h-s"
-              fontWeight="medium"
+              fontWeight="regular"
               color={"N700"}
               className={`${flexStyle === "row" ? "col-span-3" : "mb-2"} cursor-pointer`}
             >

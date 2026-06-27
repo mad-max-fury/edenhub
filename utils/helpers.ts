@@ -16,6 +16,17 @@ export type FindValueAndLabelProps = {
   [key: string]: number | string; // Allows for other properties as well
 };
 
+// Pull a human message out of an RTK Query / axiosBaseQuery error.
+export function getApiErrorMessage(error: unknown): string {
+  const e = error as any;
+  return (
+    e?.message ||
+    e?.data?.message ||
+    e?.error ||
+    "Something went wrong. Please try again."
+  );
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

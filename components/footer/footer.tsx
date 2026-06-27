@@ -14,11 +14,11 @@ interface ContactItem {
 }
 
 const EXPLORE_LINKS = [
-  { title: "Watches", href: "/watches" },
-  { title: "Sunglasses", href: "/sunglasses" },
-  { title: "Bracelets", href: "/bracelets" },
-  { title: "Wallets", href: "/wallets" },
-  { title: "Personalized Gifts", href: "/personalized-gifts" },
+  { title: "Watches", href: "/shop?category=watches" },
+  { title: "Sunglasses", href: "/shop?category=sunglasses" },
+  { title: "Bracelets", href: "/shop?category=bracelets" },
+  { title: "Wallets", href: "/shop?category=wallets" },
+  { title: "Personalized Gifts", href: "/shop?tag=personalized" },
 ];
 
 const COMPANY_LINKS = [
@@ -30,8 +30,8 @@ const COMPANY_LINKS = [
 
 const SUPPORT_LINKS = [
   { title: "FAQs", href: "/faqs" },
-  { title: "Order Tracking", href: "/order-tracking" },
-  { title: "Shipping & Returns", href: "/shipping" },
+  { title: "Order Tracking", href: "/c/account/track-order" },
+  { title: "Shipping & Returns", href: "/shipping-returns" },
   { title: "Warranty", href: "/warranty" },
 ];
 

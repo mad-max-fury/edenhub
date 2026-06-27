@@ -1,148 +1,218 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { X, ArrowRight, SearchIcon, Layers, Box } from "lucide-react";
+import {
+  X,
+  ArrowRight,
+  SearchIcon,
+  Layers,
+  Sparkles,
+  Clock,
+} from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Modal } from "../modal/modal";
 import { Button } from "../buttons";
 import { SearchInput } from "../search";
 import { MiniEmptyState } from "../miniEmptyState/miniEmptyState";
 import { EmptySearchIcon } from "@/assets/svgs/emptyStates";
-import Link from "next/link";
 import { Typography } from "../typography";
 import { Badge } from "../badge/Badge";
+import {
+  useGetCatalogProductsQuery,
+  useGetCatalogCategoriesQuery,
+  useGetBestSellersQuery,
+  type ICatalogTreeNode,
+  type ICatalogProduct,
+} from "@/redux/api/catalog";
+import Image from "next/image";
 
-interface BaseSearchItem {
-  id: string;
+const money = (n?: number) => `₦${Number(n ?? 0).toLocaleString()}`;
+
+const flatten = (
+  nodes: ICatalogTreeNode[] = [],
+): { slug: string; name: string }[] => {
+  const out: { slug: string; name: string }[] = [];
+  nodes.forEach((n) => {
+    out.push({ slug: n.slug, name: n.name });
+    if (n.subcategories?.length) out.push(...flatten(n.subcategories));
+  });
+  return out;
+};
+
+const SectionLabel = ({ title }: { title: string }) => (
+  <div className="flex items-center gap-2 mb-3 text-BR400">
+    <Typography
+      variant="c-m"
+      fontWeight="bold"
+      color="BR400"
+      className="uppercase tracking-[1.5px] text-xs"
+    >
+      {title}
+    </Typography>
+  </div>
+);
+
+const CategoryCard = ({
+  slug,
+  name,
+  onClick,
+}: {
+  slug: string;
   name: string;
-  type: "product" | "category";
-}
+  onClick: () => void;
+}) => (
+  <Link
+    href={`/shop?category=${slug}`}
+    onClick={onClick}
+    className="group flex items-center gap-3 p-3 rounded-xl border border-N20 bg-white hover:border-BR300 hover:shadow-sm transition-all"
+  >
+    <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-LB50 to-LB75 grid place-items-center shrink-0">
+      <Layers size={20} className="text-BR400" />
+    </div>
+    <div className="flex-1 min-w-0">
+      <Typography
+        variant="p-m"
+        fontWeight="medium"
+        color="BR500"
+        className="truncate"
+      >
+        {name}
+      </Typography>
+      <Typography variant="p-s" color="N80" className="text-xs">
+        Browse collection
+      </Typography>
+    </div>
+    <ArrowRight
+      size={18}
+      className="text-N200 group-hover:text-BR400 group-hover:translate-x-0.5 transition-all"
+    />
+  </Link>
+);
 
-interface ProductSearchItem extends BaseSearchItem {
-  type: "product";
-  price: number;
-  image: string;
-  quantity: number;
-}
+const ProductCard = ({
+  product,
+  onClick,
+}: {
+  product: ICatalogProduct;
+  onClick: () => void;
+}) => {
+  const inStock =
+    product.quantity > 0 || product.variants?.some((v) => v.quantity > 0);
+  const image = product.coverImage || product.images?.[0] || "";
+  const price =
+    product.discount?.price && product.discount.price > 0
+      ? product.discount.price
+      : product.basePrice;
+  return (
+    <Link
+      href={`/shop/${product._id}`}
+      onClick={onClick}
+      className="group flex items-center gap-3 p-2.5 rounded-xl border border-N20 bg-white hover:border-BR300 hover:shadow-sm transition-all"
+    >
+      <div className="w-14 h-14 rounded-lg bg-N10 overflow-hidden shrink-0 relative">
+        {image && (
+          <Image
+            src={image}
+            alt={product.name}
+            fill
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
+      <div className="flex-1 min-w-0">
+        <Typography
+          variant="p-m"
+          fontWeight="medium"
+          color="BR500"
+          className="truncate"
+        >
+          {product.name}
+        </Typography>
+        <div className="flex items-center gap-2 mt-0.5">
+          <Typography variant="p-s" fontWeight="bold" color="BR400">
+            {money(price)}
+          </Typography>
+          <Badge
+            variant={inStock ? "green" : "gray"}
+            text={inStock ? "In stock" : "Out of stock"}
+          />
+        </div>
+      </div>
+      <ArrowRight
+        size={18}
+        className="text-N200 group-hover:text-BR400 group-hover:translate-x-0.5 transition-all"
+      />
+    </Link>
+  );
+};
 
-interface CategorySearchItem extends BaseSearchItem {
-  type: "category";
-  productCount: number;
-  image: string;
-}
+const CardSkeleton = () => (
+  <div className="flex items-center gap-3 p-3 rounded-xl border border-N20 bg-white">
+    <div className="h-12 w-12 rounded-lg bg-N10 animate-pulse shrink-0" />
+    <div className="flex-1 min-w-0 space-y-2">
+      <div className="h-3.5 w-2/3 bg-N10 rounded animate-pulse" />
+      <div className="h-3 w-1/3 bg-N10 rounded animate-pulse" />
+    </div>
+  </div>
+);
 
-type SearchItem = ProductSearchItem | CategorySearchItem;
+const CardSkeletonGrid = ({
+  count,
+  cols = false,
+}: {
+  count: number;
+  cols?: boolean;
+}) => (
+  <div
+    className={
+      cols ? "grid grid-cols-1 sm:grid-cols-2 gap-3" : "grid grid-cols-1 gap-2.5"
+    }
+  >
+    {Array.from({ length: count }).map((_, i) => (
+      <CardSkeleton key={i} />
+    ))}
+  </div>
+);
 
 export const GlobalSearchDropdown: React.FC = () => {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchHistory, setSearchHistory] = useState<string[]>([
-    "Mens watches",
-    "Womens watches",
-  ]);
-  const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  const performSearch = (term: string) => {
-    const mockData: SearchItem[] = [
-      // Products
-      {
-        id: "1",
-        name: "Rolex Submariner",
-        type: "product",
-        price: 8500.0,
-        quantity: 3,
-        image: "https://www.rolex.com/content/dam/rolex/submariner.jpg",
-      },
-      {
-        id: "2",
-        name: "Ray-Ban Aviator Classic",
-        type: "product",
-        price: 153.0,
-        quantity: 25,
-        image: "https://www.ray-ban.com/images/aviator-classic.jpg",
-      },
-      {
-        id: "3",
-        name: "Omega Speedmaster",
-        type: "product",
-        price: 5200.0,
-        quantity: 7,
-        image: "https://www.omegawatches.com/media/speedmaster.jpg",
-      },
-      {
-        id: "4",
-        name: "Oakley Holbrook",
-        type: "product",
-        price: 130.0,
-        quantity: 42,
-        image: "https://www.oakley.com/media/holbrook.jpg",
-      },
-      {
-        id: "5",
-        name: "Tag Heuer Carrera",
-        type: "product",
-        price: 2800.0,
-        quantity: 5,
-        image: "https://www.tagheuer.com/media/carrera.jpg",
-      },
-      // Categories
-      {
-        id: "c1",
-        name: "Luxury Watches",
-        type: "category",
-        productCount: 56,
-        image: "https://www.watches.com/media/luxury-watches.jpg",
-      },
-      {
-        id: "c2",
-        name: "Sunglasses",
-        type: "category",
-        productCount: 128,
-        image: "https://www.sunglasses.com/media/sunglasses-collection.jpg",
-      },
-      {
-        id: "c3",
-        name: "Sports Watches",
-        type: "category",
-        productCount: 84,
-        image: "https://www.sportswatches.com/media/sports-collection.jpg",
-      },
-      {
-        id: "c4",
-        name: "Men's Collection",
-        type: "category",
-        productCount: 230,
-        image: "https://www.menscollection.com/media/mens-watches.jpg",
-      },
-      {
-        id: "c5",
-        name: "Women's Collection",
-        type: "category",
-        productCount: 185,
-        image: "https://www.womenscollection.com/media/womens-watches.jpg",
-      },
-    ];
+  const active = searchTerm.trim().length >= 2;
 
-    if (term === "") return setSearchResults([]);
+  const { data: prodRes, isFetching } = useGetCatalogProductsQuery(
+    { searchTerm: searchTerm.trim() || undefined, pageSize: 6 },
+    { skip: !active },
+  );
+  const { data: catRes, isLoading: catLoading } =
+    useGetCatalogCategoriesQuery();
+  const { data: bestRes, isFetching: bestFetching } = useGetBestSellersQuery({
+    limit: 6,
+  });
 
-    const filteredResults = mockData.filter((item) =>
-      item.name.toLowerCase().includes(term.toLowerCase())
-    );
+  const topCategories = catRes?.data ?? [];
+  const trending = bestRes?.data ?? [];
+  const popularTerms = topCategories.slice(0, 6).map((c) => c.name);
 
-    return setSearchResults(filteredResults);
-  };
+  const products = active ? (prodRes?.data.data ?? []) : [];
+  const categories = active
+    ? flatten(catRes?.data ?? []).filter((c) =>
+        c.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
+    : [];
+  const hasResults = products.length > 0 || categories.length > 0;
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    performSearch(value);
-  };
+  const close = () => setIsDropdownOpen(false);
 
   const addToSearchHistory = (term: string) => {
     if (term && !searchHistory.includes(term)) {
-      const updatedHistory = [term, ...searchHistory].slice(0, 5);
-      setSearchHistory(updatedHistory);
-      localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
+      const updated = [term, ...searchHistory].slice(0, 5);
+      setSearchHistory(updated);
+      localStorage.setItem("searchHistory", JSON.stringify(updated));
     }
   };
 
@@ -151,27 +221,21 @@ export const GlobalSearchDropdown: React.FC = () => {
     localStorage.removeItem("searchHistory");
   };
 
+  const removeSearchHistoryItem = (item: string) => {
+    const updated = searchHistory.filter((h) => h !== item);
+    setSearchHistory(updated);
+    localStorage.setItem("searchHistory", JSON.stringify(updated));
+  };
+
+  const goToShop = (term: string) => {
+    addToSearchHistory(term);
+    close();
+    router.push(`/shop?search=${encodeURIComponent(term)}`);
+  };
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchTerm.trim()) {
-      addToSearchHistory(searchTerm);
-      window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
-    }
-  };
-
-  const removeSearchHistoryItem = (item: string) => {
-    const updatedHistory = searchHistory.filter((h) => h !== item);
-    setSearchHistory(updatedHistory);
-    localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
-  };
-
-  const categorizedResults = {
-    categories: searchResults.filter(
-      (item) => item.type === "category"
-    ) as CategorySearchItem[],
-    products: searchResults.filter(
-      (item) => item.type === "product"
-    ) as ProductSearchItem[],
+    if (searchTerm.trim()) goToShop(searchTerm.trim());
   };
 
   useEffect(() => {
@@ -183,15 +247,11 @@ export const GlobalSearchDropdown: React.FC = () => {
         setIsDropdownOpen(false);
       }
     };
-    const savedHistory = localStorage.getItem("searchHistory");
-    if (savedHistory) {
-      setSearchHistory(JSON.parse(savedHistory));
-    }
+    const saved = localStorage.getItem("searchHistory");
+    if (saved) setSearchHistory(JSON.parse(saved));
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -202,13 +262,14 @@ export const GlobalSearchDropdown: React.FC = () => {
         size={"plain"}
         className={"aspect-square h-[50px]"}
         onClick={() => setIsDropdownOpen(true)}
+        aria-label="Search"
       >
         <SearchIcon className="text-BR500" />
       </Button>
       <Modal
         mobileLayoutType={"full"}
         isOpen={isDropdownOpen}
-        closeModal={() => setIsDropdownOpen(false)}
+        closeModal={close}
       >
         <div ref={searchRef} className="relative w-full">
           <div className="top-0 sticky w-full bg-white z-[1]">
@@ -216,7 +277,7 @@ export const GlobalSearchDropdown: React.FC = () => {
               <SearchInput
                 placeholder="Search by product name or category"
                 value={searchTerm}
-                onChange={handleSearchChange}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 name={"productSearch"}
                 id={""}
                 onSubmit={handleSearchSubmit}
@@ -224,136 +285,58 @@ export const GlobalSearchDropdown: React.FC = () => {
               />
             </div>
             <hr className="bg-[#808080]" />
+            {active && isFetching && (
+              <div className="h-0.5 w-full bg-BR400 animate-pulse" />
+            )}
           </div>
+
           <div
-            className="font-clashDisplay max-w-2xl mx-auto px-4 md:px-0 min-h-[500px] md:max-h-[600px] overflow-y-auto w-full mt-1 bg-white rounded-md"
+            className="font-clashDisplay max-w-2xl mx-auto px-4 md:px-0 min-h-[500px] md:max-h-[600px] overflow-y-auto w-full mt-1 bg-white rounded-md pb-10"
             role="menu"
             aria-orientation="vertical"
           >
-            {searchHistory.length > 0 && (
-              <div className="mx-auto mt-4 ">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-sm font-semibold text-gray-700">
-                    Search History
-                  </h3>
-                  <button
-                    onClick={clearSearchHistory}
-                    className="text-xs text-Br200 font-medium hover:underline"
-                  >
-                    Clear Searches
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {searchHistory.map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-xs"
-                    >
-                      {item}
-                      <button
-                        onClick={() => removeSearchHistoryItem(item)}
-                        className="ml-2 text-gray-500 hover:text-red-500"
-                      >
-                        <X size={12} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {(categorizedResults.categories.length > 0 ||
-              categorizedResults.products.length > 0) && (
-              <div className="mt-6 w-full">
-                {categorizedResults.categories.length > 0 && (
-                  <div className="max-w-2xl mx-auto mb-6">
-                    <div className="flex items-center text-sm font-medium text-gray-600 mb-2">
-                      <Layers size={16} className="mr-2" />
-                      Categories
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {categorizedResults.categories.map((category) => (
-                        <Link
-                          key={category.id}
-                          href={`/category/${category.id}`}
-                          className="flex items-center p-3 bg-LB50 hover:bg-LB75 rounded-lg transition-colors"
-                        >
-                          <div className="bg-gray-200 rounded-lg h-14 w-14 flex items-center justify-center mr-3 overflow-hidden">
-                            <img
-                              src={category.image}
-                              alt={category.name}
-                              className="object-cover w-full h-full"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <Typography
-                              variant={"h-s"}
-                              fontWeight="medium"
-                              color={"BR300"}
-                            >
-                              {category.name}
-                            </Typography>
-                            <Typography variant="p-s" color="N80">
-                              {category.productCount} products
-                            </Typography>
-                          </div>
-                          <ArrowRight className="text-BR400" size={18} />
-                        </Link>
+            {active && hasResults && (
+              <div className="mt-6 w-full space-y-7">
+                {categories.length > 0 && (
+                  <section>
+                    <SectionLabel title="Categories" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {categories.map((category) => (
+                        <CategoryCard
+                          key={category.slug}
+                          slug={category.slug}
+                          name={category.name}
+                          onClick={close}
+                        />
                       ))}
                     </div>
-                  </div>
+                  </section>
                 )}
-                {categorizedResults.products.length > 0 && (
-                  <div className="max-w-2xl mx-auto">
-                    <div className="flex items-center text-sm font-medium text-gray-600 mb-2">
-                      <Box size={16} className="mr-2" />
-                      Products
-                    </div>
-                    {categorizedResults.products.map((product) => (
-                      <Link
-                        key={product.id}
-                        href={`/product/${product.id}`}
-                        className="flex items-center p-4 hover:bg-LB50 transition-colors rounded-lg mb-2"
-                      >
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="w-16 h-16 object-cover mr-4 rounded"
+                {products.length > 0 && (
+                  <section>
+                    <SectionLabel title="Products" />
+                    <div className="grid grid-cols-1 gap-2.5">
+                      {products.map((product) => (
+                        <ProductCard
+                          key={product._id}
+                          product={product}
+                          onClick={close}
                         />
-                        <div className="flex-1 flex flex-col gap-2 sm:flex-row items-start sm:items-center justify-between ">
-                          <div>
-                            <Typography
-                              variant={"h-s"}
-                              fontWeight="medium"
-                              color={"BR300"}
-                            >
-                              {product.name}
-                            </Typography>
-
-                            <Typography
-                              variant="p-s"
-                              color="N80"
-                              className=" mr-2"
-                            >
-                              ${product.price.toFixed(2)}
-                            </Typography>
-                          </div>
-
-                          <Badge
-                            variant={"green"}
-                            text={`${product.quantity} in stock`}
-                          />
-                        </div>
-                        <ArrowRight className="text-BR400 ml-4" size={20} />
-                      </Link>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  </section>
                 )}
               </div>
             )}
 
-            {/* No Results */}
-            {searchTerm.length > 1 && searchResults.length === 0 ? (
+            {active && isFetching && !hasResults && (
+              <div className="mt-6 w-full">
+                <SectionLabel title="Searching…" />
+                <CardSkeletonGrid count={5} />
+              </div>
+            )}
+
+            {active && !hasResults && !isFetching && (
               <div className="w-full h-[400px] flex items-center justify-center">
                 <MiniEmptyState
                   icon={<EmptySearchIcon className="h-[150px]" />}
@@ -361,16 +344,118 @@ export const GlobalSearchDropdown: React.FC = () => {
                   text={`Try adjusting your search to find what you are looking for`}
                 />
               </div>
-            ) : (
-              searchTerm.length < 1 && (
-                <div className="w-full h-full flex items-center justify-center">
-                  <MiniEmptyState
-                    icon={<EmptySearchIcon className="h-[150px]" />}
-                    title="Initial Search Prompt"
-                    text={"Start typing to search for products or categories."}
-                  />
-                </div>
-              )
+            )}
+
+            {!active && (
+              <div className="mt-4 w-full space-y-7">
+                {searchHistory.length > 0 && (
+                  <section>
+                    <div className="flex justify-between items-center mb-3">
+                      <SectionLabel title="Recent searches" />
+                      <button
+                        onClick={clearSearchHistory}
+                        className="text-xs text-BR300 font-medium hover:underline mb-3"
+                      >
+                        Clear
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {searchHistory.map((item) => (
+                        <div
+                          key={item}
+                          className="flex items-center gap-1.5 bg-N10 hover:bg-LB50 rounded-full pl-3.5 pr-2 py-1.5 text-sm text-N500 transition-colors"
+                        >
+                          <button onClick={() => goToShop(item)}>{item}</button>
+                          <button
+                            onClick={() => removeSearchHistoryItem(item)}
+                            aria-label={`Remove ${item}`}
+                            className="text-N200 hover:text-R400"
+                          >
+                            <X size={13} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {popularTerms.length > 0 && (
+                  <section>
+                    <SectionLabel title="Popular searches" />
+                    <div className="flex flex-wrap gap-2">
+                      {popularTerms.map((term) => (
+                        <button
+                          key={term}
+                          onClick={() => goToShop(term)}
+                          className="rounded-full border border-N20 hover:border-BR300 hover:bg-LB50 px-4 py-1.5 text-sm text-N600 transition-all"
+                        >
+                          {term}
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {catLoading ? (
+                  <section>
+                    <SectionLabel title="Browse categories" />
+                    <CardSkeletonGrid count={4} cols />
+                  </section>
+                ) : (
+                  topCategories.length > 0 && (
+                    <section>
+                      <SectionLabel title="Browse categories" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {topCategories.slice(0, 6).map((category) => (
+                          <CategoryCard
+                            key={category.slug}
+                            slug={category.slug}
+                            name={category.name}
+                            onClick={close}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  )
+                )}
+
+                {bestFetching ? (
+                  <section>
+                    <SectionLabel title="Trending now" />
+                    <CardSkeletonGrid count={4} />
+                  </section>
+                ) : (
+                  trending.length > 0 && (
+                    <section>
+                      <SectionLabel title="Trending now" />
+                      <div className="grid grid-cols-1 gap-2.5">
+                        {trending.map((product) => (
+                          <ProductCard
+                            key={product._id}
+                            product={product}
+                            onClick={close}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  )
+                )}
+
+                {!catLoading &&
+                  !bestFetching &&
+                  topCategories.length === 0 &&
+                  trending.length === 0 && (
+                    <div className="w-full h-[400px] flex items-center justify-center">
+                      <MiniEmptyState
+                        icon={<EmptySearchIcon className="h-[150px]" />}
+                        title="Search the store"
+                        text={
+                          "Start typing to search for products or categories."
+                        }
+                      />
+                    </div>
+                  )}
+              </div>
             )}
           </div>
         </div>

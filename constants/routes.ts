@@ -4,14 +4,29 @@ const LandingPages = {
   ABOUT: "/about",
   SHOP: "/shop",
 };
+
 const AuthPages = {
-  LOGIN: "/auth/login",
-  SIGNUP: "/auth/signup",
-  CONFIRM_LOGIN: "/auth/confirm-login",
-  FORGOT_PASSWORD: "/auth/forgot-password",
-  RESET_PASSWORD: "/auth/reset-password",
-  CREATE_PASSWORD: "/auth/create-password",
-  VERIFICATION_CONFIRMATION: "/auth/verification-confirmation",
+  LOGIN: "/c/login",
+  SIGNUP: "/c/sign-up",
+  FORGOT_PASSWORD: "/c/forgot-password",
+  RESET_PASSWORD: "/c/create-new-password",
+  VERIFY_OTP: "/c/verify-otp",
+};
+
+const CustomerPages = {
+  ACCOUNT: "/c/account",
+  ACCOUNT_ORDERS: "/c/account/orders",
+  ACCOUNT_SAVED: "/c/account/saved",
+  ACCOUNT_ADDRESSES: "/c/account/addresses",
+  ACCOUNT_REVIEWS: "/c/account/reviews",
+  ACCOUNT_RECENTLY_VIEWED: "/c/account/recently-viewed",
+  ACCOUNT_MANAGE: "/c/account/manage",
+  ACCOUNT_TRACK_ORDER: "/c/account/track-order",
+  ACCOUNT_RETURNS: "/c/account/returns",
+  ACCOUNT_MESSAGES: "/c/account/messages",
+  ACCOUNT_ORDER_DETAIL: "/c/account/orders",
+  CART: "/cart",
+  CHECKOUT: "/checkout",
 };
 
 const OldStaffPages = {
@@ -88,6 +103,6 @@ export const AUTHENTICATED_ROUTES = [...ADMIN_ROUTES, ...STAFF_ROUTES];
 export const AuthRouteConfig = {
   ...LandingPages,
   ...AuthPages,
+  ...CustomerPages,
   ...StaffPages,
-  ...OldStaffPages,
 };
