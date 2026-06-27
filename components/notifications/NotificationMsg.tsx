@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import clsx from "clsx";
 
 export interface NotificationMsgProps {
   message?: string;
@@ -15,20 +14,14 @@ function NotificationMsg({
   type = "success",
 }: NotificationMsgProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-0.5">
       {message && (
-        <h2
-          className={clsx(
-            "text-sm font-bold tracking-[0.2px] first-letter:capitalize",
-            type === "success" ? "text-success" : "text-error",
-          )}
-        >
+        <p className="text-sm font-medium text-N900 first-letter:capitalize leading-snug">
           {message}
-        </h2>
+        </p>
       )}
-
       {subtitle && (
-        <p className="text-xs !text-[#A9A9A9]">
+        <p className="text-xs text-N500 leading-snug">
           {subtitle[0].toUpperCase() + subtitle.slice(1)}
         </p>
       )}

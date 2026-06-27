@@ -13,6 +13,22 @@ const AuthPages = {
   VERIFY_OTP: "/c/verify-otp",
 };
 
+const CustomerPages = {
+  ACCOUNT: "/c/account",
+  ACCOUNT_ORDERS: "/c/account/orders",
+  ACCOUNT_SAVED: "/c/account/saved",
+  ACCOUNT_ADDRESSES: "/c/account/addresses",
+  ACCOUNT_REVIEWS: "/c/account/reviews",
+  ACCOUNT_RECENTLY_VIEWED: "/c/account/recently-viewed",
+  ACCOUNT_MANAGE: "/c/account/manage",
+  ACCOUNT_TRACK_ORDER: "/c/account/track-order",
+  ACCOUNT_RETURNS: "/c/account/returns",
+  ACCOUNT_MESSAGES: "/c/account/messages",
+  ACCOUNT_ORDER_DETAIL: "/c/account/orders",
+  CART: "/cart",
+  CHECKOUT: "/checkout",
+};
+
 const OldStaffPages = {
   OLD_STAFF_ONBOARDING: "/onboarding",
   OLD_STAFF_ONBOARDING_BIO_DATA: "/onboarding/bio-data",
@@ -87,5 +103,6 @@ export const AUTHENTICATED_ROUTES = [...ADMIN_ROUTES, ...STAFF_ROUTES];
 export const AuthRouteConfig = {
   ...LandingPages,
   ...AuthPages,
+  ...CustomerPages,
   ...StaffPages,
 };

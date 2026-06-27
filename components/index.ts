@@ -37,7 +37,7 @@ export * from "./networkError/networkError";
 export * from "./badge/Badge";
 export * from "./radioButton/radioButton";
 export * from "./formStepJumbotron/formStepJumbotron";
-export * from "./documentViewer/DocumentViewer";
+
 export * from "./noAuthorizationFound/noAuthorizationFound";
 export * from "./attentionBanner/AttentionBanner";
 export * from "./formInfoBanner/formInfoBanner";
@@ -46,7 +46,7 @@ export * from "./customQuillEditor/BubbleQuillEditor";
 export * from "./circularProgressBar/CircularProgressbar";
 export * from "./smSelect/smAsyncSelect";
 export * from "./footer/footer";
-export * from "./pdfViewer/pdfViewer";
+
 export * from "./miniEmptyState/miniEmptyState";
 export * from "./imageOverlay/imageOverlay";
 export * from "./Reviewer/reviewer";
@@ -55,3 +55,10 @@ export * from "./itemCollection/itemCollection";
 export * from "./WatchShowcase/WatchShowcase";
 export * from "./landingTab/LandingTab";
 export * from "./testimonialCard/TestimonialCard";
+export * from "./assuranceStrip/AssuranceStrip";
+export * from "./categoryTiles/CategoryTiles";
+export * from "./editorialFeature/EditorialFeature";
+export * from "./heroCarousel/HeroCarousel";
+export * from "./testimonialsCarousel/TestimonialsCarousel";
+export * from "./shopReviewForm/ShopReviewForm";
+export * from "./authModal/AuthModal";

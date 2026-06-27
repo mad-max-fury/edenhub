@@ -2,7 +2,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TextField, Button } from "@/components";
+import { TextField, Button, notify } from "@/components";
 import { useRouter } from "next/navigation";
 import { forgotPasswordSchema } from "../../schema";
 import {
@@ -11,6 +11,8 @@ import {
 } from "../../interfaces";
 import AuthWrapper from "../../components/AuthWrapper";
 import { AuthRouteConfig } from "@/constants/routes";
+import { getApiErrorMessage } from "@/utils/helpers";
+import { useForgotPasswordMutation } from "@/redux/api/auth";
 
 interface IForgotPasswordFormProps {
 	setFilter: React.Dispatch<React.SetStateAction<IForgotPasswordFilterProps>>;
@@ -18,6 +20,7 @@ interface IForgotPasswordFormProps {
 
 export const ForgotPasswordForm = ({ setFilter }: IForgotPasswordFormProps) => {
 	const router = useRouter();
+	const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 	const {
 		register,
 		handleSubmit,
@@ -27,8 +30,20 @@ export const ForgotPasswordForm = ({ setFilter }: IForgotPasswordFormProps) => {
 	});
 
 	const onSubmit = async (data: IForgotPasswordPayload) => {
-		// router.push(`/c/verify-otp?email=${data.email}`);
-		setFilter({ isSubmitted: true, email: data.email });
+		try {
+			await forgotPassword({ email: data.email }).unwrap();
+			setFilter({ isSubmitted: true, email: data.email });
+			notify.success({
+				message: "Code sent",
+				subtitle: "Check your email for the reset code",
+			});
+			router.push(`${AuthRouteConfig.VERIFY_OTP}?email=${data.email}`);
+		} catch (err) {
+			notify.error({
+				message: "Could not send reset code",
+				subtitle: getApiErrorMessage(err),
+			});
+		}
 	};
 
 	return (
@@ -51,8 +66,13 @@ export const ForgotPasswordForm = ({ setFilter }: IForgotPasswordFormProps) => {
 					error={!!errors.email}
 					errorText={errors.email?.message}
 				/>
-				<Button variant="brown-light" className="w-full capitalize">
-					send reset link
+				<Button
+					variant="brown-light"
+					type="submit"
+					loading={isLoading}
+					className="w-full capitalize"
+				>
+					send reset code
 				</Button>
 			</form>
 		</AuthWrapper>

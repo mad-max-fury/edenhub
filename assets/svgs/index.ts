@@ -18,7 +18,6 @@ import EllipsisIcon from "./ellipsisIcon.svg";
 import EmptyStateIcon from "./emptyState.svg";
 import ErrorIndicator from "./error-indicator.svg";
 import ErrorIcon from "./error.svg";
-import ExitMenuIcon from "./exit-menu-icon.svg";
 import FileIcon from "./fileIcon.svg";
 import GoodCircleIcon from "./goodCircleIcon.svg";
 import InfoBlueIcon from "./info-blue.svg";
@@ -38,16 +37,13 @@ import TrashFilledIcon from "./trash-filled.svg";
 import TrashIcon from "./trash.svg";
 
 import UploadIcon from "./uploadIcon.svg";
-import ViewProfile from "./view-profile.svg";
 import NotifErrorIcon from "./xIcon.svg";
-import DownloadIconTwo from "./downloadIconTwo.svg";
 
 import CartIcon from "./cart.svg";
 import UserIcon from "./userIcon.svg";
 import GoogleIcon from "./google.svg";
 
 import MessageNotifIcon from "./message-notif.svg";
-import GoldLogoIcon from "./goldLogo.svg";
 
 export {
   HamburgerIcon,
@@ -60,7 +56,6 @@ export {
   SuccessIndicator,
   PassLock,
   SearchIcon,
-  ExitMenuIcon,
   NotifSuccessIcon,
   NotifErrorIcon,
   NotifInfoIcon,
@@ -85,11 +80,8 @@ export {
   PendingDotIcon,
   InfoBlueIcon,
   ArrpwUpRightIcon,
-  ViewProfile,
-  DownloadIconTwo,
   CartIcon,
   UserIcon,
   GoogleIcon,
   MessageNotifIcon,
-  GoldLogoIcon
 };
