@@ -17,7 +17,7 @@ import { useValidateAddressMutation } from "@/redux/api/orders";
 import { AddressAutocomplete } from "@/components/addressAutocomplete/AddressAutocomplete";
 
 const blank: IAddressPayload = {
-	firstName: "", lastName: "", phone: "", additionalPhone: "",
+	firstName: "", lastName: "", phone: "", email: "", additionalPhone: "",
 	address: "", landmark: "", city: "", state: "", country: "Nigeria", postalCode: "", isDefault: false,
 };
 
@@ -46,17 +46,22 @@ const AddressBook = () => {
 	const [validateAddress, { isLoading: validatingAddr }] = useValidateAddressMutation();
 
 	const save = async () => {
-		if (!form.firstName || !form.lastName || !form.phone || !form.address || !form.city || !form.state) { notify.error({ message: "Please fill all required fields" }); return; }
+		if (!form.firstName || !form.lastName || !form.phone || !form.email || !form.address || !form.city || !form.state) {
+			notify.error({ message: "Please fill all required fields including email" }); return;
+		}
 		let payload = { ...form };
 		try {
 			const res = await validateAddress({
 				name: `${form.firstName} ${form.lastName}`,
-				email: "",
+				email: form.email,
 				phone: form.phone,
 				address: `${form.address}, ${form.city}, ${form.state}, ${form.country || "Nigeria"}`,
 			}).unwrap();
 			payload.addressCode = res.data.addressCode;
-		} catch {}
+		} catch (err) {
+			notify.error({ message: "Address validation failed", subtitle: getApiErrorMessage(err) });
+			return;
+		}
 		try {
 			if (editingId) { await updateAddress({ id: editingId, data: payload }).unwrap(); notify.success({ message: "Address updated" }); }
 			else { await addAddress(payload).unwrap(); notify.success({ message: "Address added" }); }
@@ -142,6 +147,7 @@ const AddressBook = () => {
 					{field("firstName", "First Name", { required: true })}
 					{field("lastName", "Last Name", { required: true })}
 					{field("phone", "Phone", { required: true })}
+					{field("email", "Email", { required: true })}
 					{field("additionalPhone", "Additional Phone")}
 					<div className="sm:col-span-2">
 						<label className="text-xs text-N500 block mb-1">Address <span className="text-R400">*</span></label>
