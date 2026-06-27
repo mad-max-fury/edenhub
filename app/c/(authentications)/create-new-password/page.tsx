@@ -2,13 +2,27 @@
 
 import React from "react";
 import AuthWrapper from "../components/AuthWrapper";
-import { Button, TextField } from "@/components";
+import { Button, TextField, notify } from "@/components";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
 import { ICreateNewPasswordFormData } from "../interfaces";
 import { createNewPasswordSchema } from "../schema";
+import { AuthRouteConfig } from "@/constants/routes";
+import { getApiErrorMessage } from "@/utils/helpers";
+import { useResetPasswordMutation } from "@/redux/api/auth";
 
 const CreateNewPassword = () => {
+	const router = useRouter();
+	const [resetPassword, { isLoading }] = useResetPasswordMutation();
+
+	const params =
+		typeof window !== "undefined"
+			? new URLSearchParams(window.location.search)
+			: new URLSearchParams();
+	const email = params.get("email") ?? "";
+	const code = params.get("code") ?? "";
+
 	const {
 		register,
 		handleSubmit,
@@ -18,8 +32,32 @@ const CreateNewPassword = () => {
 		mode: "onChange",
 	});
 
-	const onSubmit = (data: ICreateNewPasswordFormData) => {
-		console.log("New password data:", data);
+	const onSubmit = async (data: ICreateNewPasswordFormData) => {
+		if (!email || !code) {
+			notify.error({
+				message: "Missing details",
+				subtitle: "Please restart the password reset flow",
+			});
+			router.push(AuthRouteConfig.FORGOT_PASSWORD);
+			return;
+		}
+		try {
+			await resetPassword({
+				email,
+				newPassword: data.password,
+				verificationCode: code,
+			}).unwrap();
+			notify.success({
+				message: "Password updated",
+				subtitle: "You can now sign in with your new password",
+			});
+			router.push(AuthRouteConfig.LOGIN);
+		} catch (err) {
+			notify.error({
+				message: "Reset failed",
+				subtitle: getApiErrorMessage(err),
+			});
+		}
 	};
 
 	return (
@@ -54,7 +92,7 @@ const CreateNewPassword = () => {
 					className="mt-8 w-full font-bold capitalize"
 					variant="brown-light"
 					type="submit"
-					loading={false}
+					loading={isLoading}
 				>
 					reset password
 				</Button>

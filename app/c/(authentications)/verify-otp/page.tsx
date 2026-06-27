@@ -10,11 +10,13 @@ import { Button, notify, TextField, ValidationText } from "@/components";
 import { verifyOtpSchema } from "../schema";
 import { IVerifyOtpPayload } from "../interfaces";
 import { AuthRouteConfig } from "@/constants/routes";
+import { useForgotPasswordMutation } from "@/redux/api/auth";
 
 const RESEND_INTERVAL = 60; // in seconds
 
 const VerifyOtpPage = () => {
 	const router = useRouter();
+	const [forgotPassword] = useForgotPasswordMutation();
 	const searchParams = new URLSearchParams(window.location.search);
 	const email = searchParams.get("email");
 
@@ -48,21 +50,24 @@ const VerifyOtpPage = () => {
 		return () => clearInterval(countdown);
 	}, [timer]);
 
-	const handleResend = useCallback(() => {
-		// TODO: Call API to resend OTP here
-		console.log("Resending OTP to:", email);
-
+	const handleResend = useCallback(async () => {
+		try {
+			await forgotPassword({ email: email as string }).unwrap();
+			notify.success({ message: "Code resent", subtitle: "Check your email" });
+		} catch {
+			notify.error({ message: "Could not resend code" });
+		}
 		setCanResend(false);
 		setTimer(RESEND_INTERVAL);
-	}, [email]);
+	}, [email, forgotPassword]);
 
 	const onSubmit = async (data: IVerifyOtpPayload) => {
-		const token = "mock-reset-token"; // Ideally fetched after verifying the OTP
-		router.push(AuthRouteConfig.LOGIN);
-		notify.success({
-			message: "Account successfully Verified",
-			subtitle: "Your account has been verified, proceed to log in",
-		});
+		// No standalone verify endpoint; carry the code to the reset step.
+		router.push(
+			`${AuthRouteConfig.RESET_PASSWORD}?email=${encodeURIComponent(
+				email as string,
+			)}&code=${data.otp}`,
+		);
 	};
 
 	return (

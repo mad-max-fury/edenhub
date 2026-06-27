@@ -2,17 +2,24 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, TextField, Checkbox } from "@/components";
+import { Button, TextField, Checkbox, notify } from "@/components";
 import AuthWrapper from "../components/AuthWrapper";
 import { signupSchema } from "../schema";
 import { ISignUpPayload } from "../interfaces";
 import Link from "next/link";
-import { fieldSetterAndClearer } from "@/utils/helpers";
+import { fieldSetterAndClearer, getApiErrorMessage } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import { AuthRouteConfig } from "@/constants/routes";
+import { useSignupMutation } from "@/redux/api/auth";
+import { GoogleSignInButton } from "@/components/googleSignIn/GoogleSignInButton";
 
 const SignupPage = () => {
 	const router = useRouter();
+	const returnTo = React.useMemo(() => {
+		if (typeof window === "undefined") return "";
+		return new URLSearchParams(window.location.search).get("returnTo") || "";
+	}, []);
+	const [signup, { isLoading }] = useSignupMutation();
 
 	const {
 		register,
@@ -27,10 +34,27 @@ const SignupPage = () => {
 		mode: "onChange",
 	});
 
-	const onSubmit = (data: ISignUpPayload) => {
-		console.log("Form submitted:", data);
-		router.push(`${AuthRouteConfig.VERIFY_OTP}?email=` + data.email);
-		// Submit logic
+	const onSubmit = async (data: ISignUpPayload) => {
+		try {
+			await signup({
+				firstName: data.firstName,
+				lastName: data.lastName,
+				email: data.email,
+				password: data.password,
+				confirmPassword: data.confirmPassword,
+			}).unwrap();
+
+			notify.success({
+				message: "Account created",
+				subtitle: "Please sign in to continue",
+			});
+			router.push(`${AuthRouteConfig.LOGIN}${returnTo ? `?returnTo=${encodeURIComponent(returnTo)}` : ""}`);
+		} catch (err) {
+			notify.error({
+				message: "Sign up failed",
+				subtitle: getApiErrorMessage(err),
+			});
+		}
 	};
 
 	return (
@@ -39,7 +63,7 @@ const SignupPage = () => {
 			description="Create an account by filling the form below with your personal information."
 			linkText="Already have an account?"
 			linkSubText="Sign in"
-			linkHref={AuthRouteConfig.LOGIN}
+			linkHref={`${AuthRouteConfig.LOGIN}${returnTo ? `?returnTo=${encodeURIComponent(returnTo)}` : ""}`}
 		>
 			<form
 				onSubmit={handleSubmit(onSubmit)}
@@ -160,13 +184,22 @@ const SignupPage = () => {
 				</div>
 
 				<Button
-					className="mb-5 mt-10 flex w-full !items-center !justify-center !text-center font-bold"
+					className="mb-3 mt-10 flex w-full !items-center !justify-center !text-center font-bold"
 					variant="brown-light"
-					loading={false}
+					type="submit"
+					loading={isLoading}
 				>
 					Sign Up
 				</Button>
 			</form>
+
+			<div className="w-full flex items-center gap-3 my-2">
+				<div className="flex-1 h-px bg-N30" />
+				<span className="text-xs text-N400">or</span>
+				<div className="flex-1 h-px bg-N30" />
+			</div>
+
+			<GoogleSignInButton returnTo={returnTo} label="Sign up with Google" />
 		</AuthWrapper>
 	);
 };

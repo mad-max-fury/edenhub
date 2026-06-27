@@ -1,43 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { cookieValues, Roles } from "./constants/data";
-import {
-  ADMIN_ROUTES,
-  AUTHENTICATED_ROUTES,
-  AuthRouteConfig,
-  STAFF_ROUTES,
-  UNAUTHENTICATED_ROUTES,
-} from "./constants/routes";
+import { cookieValues } from "./constants/data";
+import { AuthRouteConfig } from "./constants/routes";
 
-async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+// Routes that require a signed-in customer.
+const PROTECTED_PREFIXES = [
+  AuthRouteConfig.ACCOUNT, // /c/account*
+  AuthRouteConfig.CHECKOUT, // /checkout*
+];
 
-  if (AUTHENTICATED_ROUTES.includes(pathname)) {
-    const token = request.cookies.get(cookieValues.token);
-    if (!token || !token.value) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+// Auth pages a signed-in customer shouldn't see.
+const AUTH_ONLY_ROUTES = [
+  AuthRouteConfig.LOGIN,
+  AuthRouteConfig.SIGNUP,
+  AuthRouteConfig.FORGOT_PASSWORD,
+  AuthRouteConfig.RESET_PASSWORD,
+  AuthRouteConfig.VERIFY_OTP,
+];
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const token = request.cookies.get(cookieValues.token)?.value;
+
+  // Gate protected areas behind authentication.
+  if (PROTECTED_PREFIXES.some((p) => pathname.startsWith(p)) && !token) {
+    const url = new URL(AuthRouteConfig.LOGIN, request.url);
+    return NextResponse.redirect(url);
   }
-  const userRole = request.cookies.get(cookieValues.userType);
 
-  if (ADMIN_ROUTES.includes(pathname) && userRole!.value !== Roles.admin) {
-    return NextResponse.redirect(new URL("/not-found", request.url));
+  // Send already-authenticated users away from the auth pages.
+  if (AUTH_ONLY_ROUTES.includes(pathname) && token) {
+    return NextResponse.redirect(new URL(AuthRouteConfig.ACCOUNT, request.url));
   }
 
-  if (STAFF_ROUTES.includes(pathname) && userRole!.value !== Roles.staff) {
-    return NextResponse.redirect(new URL("/not-found", request.url));
-  }
-  return reRouteIftoken(request);
+  return NextResponse.next();
 }
 
-const reRouteIftoken = (request: NextRequest) => {
-  const userRole = request.cookies.get(cookieValues.userType);
-  const pathname = request.nextUrl.pathname;
-  if (userRole && UNAUTHENTICATED_ROUTES.includes(pathname)) {
-    return NextResponse.redirect(
-      new URL(AuthRouteConfig.ORGANIZATIONAL_SETUP_COMPANIES, request.url),
-    );
-  }
+export const config = {
+  matcher: ["/c/:path*", "/checkout/:path*"],
 };
-
-module.exports = { middleware };

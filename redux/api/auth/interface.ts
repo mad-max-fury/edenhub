@@ -1,55 +1,56 @@
-export interface IVerifyUserPayload {
+export interface IUserRole {
+  _id: string;
+  name: string;
+}
+
+export interface IUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  phoneNumber?: string;
+  profilePicture?: string;
+  country?: string;
+  state?: string;
+  city?: string;
+  isActive: boolean;
+  isVerified: boolean;
+  role: IUserRole | string;
+  twoFactorEnabled?: boolean;
+  twoFactorMethod?: "email" | "authenticator";
+  googleId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ISignupPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface ILoginPayload {
-  userName: string;
+  email: string;
   password: string;
 }
 
-export interface IResetPasswordPayload {
-  authenticationToken: string;
-  email: string;
-  newPassword: string;
-}
-
-export interface ICreateUserLoginPayload {
-  username: string;
-  newPassword: string;
-  emailConfirmationAuthenticationToken: string;
-  resetPasswordAuthenticationToken: string;
-}
-
-export interface IVerifyUserResponse {
-  jwtToken: any;
-  refreshToken: any;
-  email: any;
-  passport: any;
-  profilePicture: any;
-  userType: any;
-  fullName: string;
-  menuItems: any;
-  twoFactor: boolean;
-  userId: string;
-  employeeId: string;
-  role: any;
-  oldUser: boolean;
-}
-
-export interface ILoginUserResponse {
-  jwtToken: {
-    token: string;
-    issued: string;
-    expires: string;
-  };
+export interface ILoginResponse {
+  user: IUser;
+  accessToken: string;
   refreshToken: string;
+  twoFactorRequired?: boolean;
+  twoFactorMethod?: "email" | "authenticator";
+  email?: string;
+}
+
+export interface IForgotPasswordPayload {
   email: string;
-  passport: string;
-  role: string;
-  userType: string;
-  fullName: string;
-  menuItems: string[];
-  twoFactor: true;
-  userId: string;
-  pldUser: true;
+}
+
+export interface IResetPasswordPayload {
+  email: string;
+  newPassword: string;
+  verificationCode: string;
 }
