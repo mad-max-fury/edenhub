@@ -23,9 +23,11 @@ import {
 import {
 	useCreateOrderMutation,
 	useFetchRatesMutation,
+	useValidateAddressMutation,
 	type ICourierRate,
 	type IReceiverAddress,
 } from "@/redux/api/orders";
+import { AddressAutocomplete } from "@/components/addressAutocomplete/AddressAutocomplete";
 
 const money = (n?: number) => `₦${Number(n ?? 0).toLocaleString()}`;
 const ORDER_KEY = "edenhub_pending_order";
@@ -40,14 +42,27 @@ const AddressFormModal = ({ isOpen, onClose, onSave, saving, initial, title }: {
 	initial?: IAddressPayload; title?: string;
 }) => {
 	const [form, setForm] = useState<IAddressPayload>(initial ?? blankForm);
+	const [validateAddress, { isLoading: validating }] = useValidateAddressMutation();
 	useEffect(() => { if (isOpen) setForm(initial ?? blankForm); }, [isOpen, initial]);
 	const set = (key: keyof IAddressPayload, value: string | boolean) => setForm((f) => ({ ...f, [key]: value }));
-	const handleSave = () => {
+
+	const handleSave = async () => {
 		if (!form.firstName || !form.lastName || !form.phone || !form.address || !form.city || !form.state) {
 			notify.error({ message: "Please fill all required fields" }); return;
 		}
-		onSave(form);
+		try {
+			const res = await validateAddress({
+				name: `${form.firstName} ${form.lastName}`,
+				email: "",
+				phone: form.phone,
+				address: `${form.address}, ${form.city}, ${form.state}, ${form.country || "Nigeria"}`,
+			}).unwrap();
+			onSave({ ...form, addressCode: res.data.addressCode });
+		} catch {
+			onSave(form);
+		}
 	};
+
 	const field = (key: keyof IAddressPayload, label: string, opts?: { span2?: boolean; required?: boolean }) => (
 		<div className={opts?.span2 ? "sm:col-span-2" : ""}>
 			<label className="text-xs text-N500 block mb-1">{label} {opts?.required && <span className="text-R400">*</span>}</label>
@@ -55,18 +70,39 @@ const AddressFormModal = ({ isOpen, onClose, onSave, saving, initial, title }: {
 				className="w-full border border-N40 rounded px-3 py-2.5 text-sm focus:border-BR400 outline-none" />
 		</div>
 	);
+
 	return (
 		<Modal isOpen={isOpen} closeModal={onClose} title={title || "Add Delivery Address"} mobileLayoutType="normal"
 			footerData={<div className="flex gap-3 justify-end">
 				<Button variant="gold" onClick={onClose}>Cancel</Button>
-				<Button variant="brown-light" loading={saving} onClick={handleSave}>Save</Button>
+				<Button variant="brown-light" loading={saving || validating} onClick={handleSave}>
+					{validating ? "Validating…" : "Save"}
+				</Button>
 			</div>}>
 			<div className="p-6 grid sm:grid-cols-2 gap-4">
 				{field("firstName", "First Name", { required: true })}
 				{field("lastName", "Last Name", { required: true })}
 				{field("phone", "Phone", { required: true })}
 				{field("additionalPhone", "Additional Phone")}
-				{field("address", "Address", { span2: true, required: true })}
+				<div className="sm:col-span-2">
+					<label className="text-xs text-N500 block mb-1">Address <span className="text-R400">*</span></label>
+					<AddressAutocomplete
+						value={form.address}
+						onChange={(v) => set("address", v)}
+						onSelect={(result) => {
+							setForm((f) => ({
+								...f,
+								address: result.address,
+								city: result.city || f.city,
+								state: result.state || f.state,
+								country: result.country || f.country || "Nigeria",
+								postalCode: result.postalCode || f.postalCode,
+							}));
+						}}
+						placeholder="Start typing your address…"
+						className="w-full border border-N40 rounded px-3 py-2.5 text-sm focus:border-BR400 outline-none"
+					/>
+				</div>
 				{field("landmark", "Landmark", { span2: true })}
 				{field("country", "Country", { required: true })}
 				{field("state", "Region (State)", { required: true })}
@@ -87,6 +123,7 @@ const toReceiver = (a: IAddress): IReceiverAddress => ({
 	firstName: a.firstName, lastName: a.lastName, fullName: a.fullName || `${a.firstName} ${a.lastName}`,
 	phone: a.phone, additionalPhone: a.additionalPhone, address: a.address, landmark: a.landmark,
 	city: a.city, state: a.state, country: a.country, postalCode: a.postalCode,
+	addressCode: a.addressCode,
 });
 
 const toPayload = (a: IAddress): IAddressPayload => {

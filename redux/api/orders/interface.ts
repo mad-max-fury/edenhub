@@ -18,6 +18,7 @@ export interface IReceiverAddress {
   state: string;
   country?: string;
   postalCode?: string;
+  addressCode?: string;
 }
 
 export interface ICourierRate {
