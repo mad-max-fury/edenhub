@@ -20,6 +20,7 @@ export interface IAddressPayload {
   lastName: string;
   fullName?: string;
   phone: string;
+  email?: string;
   additionalPhone?: string;
   address: string;
   landmark?: string;
