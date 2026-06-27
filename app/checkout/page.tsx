@@ -33,7 +33,7 @@ const money = (n?: number) => `₦${Number(n ?? 0).toLocaleString()}`;
 const ORDER_KEY = "edenhub_pending_order";
 
 const blankForm: IAddressPayload = {
-	firstName: "", lastName: "", phone: "", additionalPhone: "",
+	firstName: "", lastName: "", phone: "", additionalPhone: "", email: "",
 	address: "", landmark: "", city: "", state: "", country: "Nigeria", postalCode: "", isDefault: false,
 };
 
@@ -47,19 +47,19 @@ const AddressFormModal = ({ isOpen, onClose, onSave, saving, initial, title }: {
 	const set = (key: keyof IAddressPayload, value: string | boolean) => setForm((f) => ({ ...f, [key]: value }));
 
 	const handleSave = async () => {
-		if (!form.firstName || !form.lastName || !form.phone || !form.address || !form.city || !form.state) {
-			notify.error({ message: "Please fill all required fields" }); return;
+		if (!form.firstName || !form.lastName || !form.phone || !form.email || !form.address || !form.city || !form.state) {
+			notify.error({ message: "Please fill all required fields including email" }); return;
 		}
 		try {
 			const res = await validateAddress({
 				name: `${form.firstName} ${form.lastName}`,
-				email: "",
+				email: form.email,
 				phone: form.phone,
 				address: `${form.address}, ${form.city}, ${form.state}, ${form.country || "Nigeria"}`,
 			}).unwrap();
 			onSave({ ...form, addressCode: res.data.addressCode });
-		} catch {
-			onSave(form);
+		} catch (err) {
+			notify.error({ message: "Address validation failed", subtitle: getApiErrorMessage(err) });
 		}
 	};
 
@@ -83,6 +83,7 @@ const AddressFormModal = ({ isOpen, onClose, onSave, saving, initial, title }: {
 				{field("firstName", "First Name", { required: true })}
 				{field("lastName", "Last Name", { required: true })}
 				{field("phone", "Phone", { required: true })}
+				{field("email", "Email", { required: true })}
 				{field("additionalPhone", "Additional Phone")}
 				<div className="sm:col-span-2">
 					<label className="text-xs text-N500 block mb-1">Address <span className="text-R400">*</span></label>
