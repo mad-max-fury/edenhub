@@ -416,7 +416,7 @@ const ProductDetail = ({ params }: { params: { id: string } }) => {
           <section className="mt-16 border-t border-N20 pt-10">
             <h2 className="text-[15px] font-semibold text-N900 mb-5">You may also like</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {related.map((p) => <ShopProductCard key={p._id} product={p} />)}
+              {related.map((p) => <ShopProductCard key={p._id} product={p} variant="minimal" />)}
             </div>
           </section>
         )}
@@ -435,7 +435,7 @@ const ProductDetail = ({ params }: { params: { id: string } }) => {
             <h2 className="text-[15px] font-semibold text-N900 mb-5">Recently viewed</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {recentlyViewed.filter((p) => p._id !== product._id).slice(0, 4).map((p) => (
-                <ShopProductCard key={p._id} product={p} />
+                <ShopProductCard key={p._id} product={p} variant="minimal" />
               ))}
             </div>
           </section>
