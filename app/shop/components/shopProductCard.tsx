@@ -53,7 +53,23 @@ const Stars = ({ value }: { value: number }) => {
   );
 };
 
-export const ShopProductCard = ({ product }: { product: ICatalogProduct }) => {
+interface ShopProductCardProps {
+  product: ICatalogProduct;
+  /**
+   * "default" — full card with persistent Add to Cart bar (shop grid).
+   * "minimal" — browse-first card for discovery contexts (recently viewed,
+   * related products, search results). No CTA bar by default; a quick-add
+   * icon appears on hover on desktop, and is always visible on touch
+   * devices since they have no hover state to reveal it.
+   */
+  variant?: "default" | "minimal";
+}
+
+export const ShopProductCard = ({
+  product,
+  variant: cardVariant = "default",
+}: ShopProductCardProps) => {
+  const isMinimal = cardVariant === "minimal";
   const { requireAuth } = useAuthModal();
   const { addItem, items, setItemQty } = useCart();
   const [variant, setVariant] = useState<ICatalogVariant | null>(null);
@@ -236,6 +252,49 @@ export const ShopProductCard = ({ product }: { product: ICatalogProduct }) => {
         >
           <Heart size={14} className={isSaved ? "fill-BR400 text-BR400" : ""} />
         </button>
+
+        {isMinimal &&
+          (line ? (
+            <div
+              onClick={stop}
+              className="absolute bottom-2 right-2 z-20 flex items-stretch bg-BR500 text-white rounded-full shadow-sm overflow-hidden opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus-within:opacity-100 transition-all duration-200"
+            >
+              <button
+                type="button"
+                onClick={(e) => changeQty(e, line.quantity - 1)}
+                aria-label="Decrease quantity"
+                className="grid place-items-center w-7 h-7 hover:bg-BR400 transition-colors"
+              >
+                <Minus size={12} />
+              </button>
+              <span className="grid place-items-center min-w-[1.1rem] text-[11px] font-medium px-0.5">
+                {line.quantity}
+              </span>
+              <button
+                type="button"
+                onClick={(e) => changeQty(e, line.quantity + 1)}
+                aria-label="Increase quantity"
+                className="grid place-items-center w-7 h-7 hover:bg-BR400 transition-colors"
+              >
+                <Plus size={12} />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handleAdd}
+              disabled={!inStock || adding}
+              aria-label={
+                inStock ? `Quick add ${product.name} to cart` : "Out of stock"
+              }
+              className="absolute bottom-2 right-2 z-20 flex items-center gap-1.5 rounded-full shadow-sm transition-all duration-200 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 focus-visible:opacity-100 disabled:opacity-50 disabled:cursor-not-allowed bg-white/95 hover:bg-white text-BR500 px-3 py-1.5"
+            >
+              <ShoppingBag size={13} className={adding ? "animate-pulse" : ""} />
+              <span className="text-[10px] font-medium uppercase tracking-[0.5px] whitespace-nowrap">
+                {inStock ? (adding ? "Adding…" : "Add to cart") : "Out of stock"}
+              </span>
+            </button>
+          ))}
       </div>
 
       {
@@ -325,41 +384,42 @@ export const ShopProductCard = ({ product }: { product: ICatalogProduct }) => {
         </div>
       </div>
 
-      {line ? (
-        <div className="flex mt-3 sm:mt-5 items-stretch bg-BR500 text-white">
+      {!isMinimal &&
+        (line ? (
+          <div className="flex mt-3 sm:mt-5 items-stretch bg-BR500 text-white">
+            <button
+              type="button"
+              onClick={(e) => changeQty(e, line.quantity - 1)}
+              aria-label="Decrease quantity"
+              className="px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-BR400 transition-colors"
+            >
+              <Minus size={14} className="sm:w-4 sm:h-4" />
+            </button>
+            <span className="flex-1 grid place-items-center text-[10px] sm:text-[11px] uppercase tracking-[1px] sm:tracking-[1.5px]">
+              {line.quantity} in cart
+            </span>
+            <button
+              type="button"
+              onClick={(e) => changeQty(e, line.quantity + 1)}
+              aria-label="Increase quantity"
+              className="px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-BR400 transition-colors"
+            >
+              <Plus size={14} className="sm:w-4 sm:h-4" />
+            </button>
+          </div>
+        ) : (
           <button
             type="button"
-            onClick={(e) => changeQty(e, line.quantity - 1)}
-            aria-label="Decrease quantity"
-            className="px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-BR400 transition-colors"
+            onClick={handleAdd}
+            disabled={!inStock || adding}
+            className="flex items-center mt-3 sm:mt-5 justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 text-[10px] sm:text-xs uppercase tracking-[1px] sm:tracking-[1.5px] bg-BR500 text-white disabled:bg-N300 disabled:cursor-not-allowed"
           >
-            <Minus size={14} className="sm:w-4 sm:h-4" />
+            <ShoppingBag size={14} className="shrink-0 sm:w-[15px] sm:h-[15px]" />
+            <span className="truncate">
+              {inStock ? (adding ? "Adding…" : "Add to cart") : "Out of stock"}
+            </span>
           </button>
-          <span className="flex-1 grid place-items-center text-[10px] sm:text-[11px] uppercase tracking-[1px] sm:tracking-[1.5px]">
-            {line.quantity} in cart
-          </span>
-          <button
-            type="button"
-            onClick={(e) => changeQty(e, line.quantity + 1)}
-            aria-label="Increase quantity"
-            className="px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-BR400 transition-colors"
-          >
-            <Plus size={14} className="sm:w-4 sm:h-4" />
-          </button>
-        </div>
-      ) : (
-        <button
-          type="button"
-          onClick={handleAdd}
-          disabled={!inStock || adding}
-          className="flex items-center mt-3 sm:mt-5 justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 text-[10px] sm:text-xs uppercase tracking-[1px] sm:tracking-[1.5px] bg-BR500 text-white disabled:bg-N300 disabled:cursor-not-allowed"
-        >
-          <ShoppingBag size={14} className="shrink-0 sm:w-[15px] sm:h-[15px]" />
-          <span className="truncate">
-            {inStock ? (adding ? "Adding…" : "Add to cart") : "Out of stock"}
-          </span>
-        </button>
-      )}
+        ))}
     </Link>
   );
 };

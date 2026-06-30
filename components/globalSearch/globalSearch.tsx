@@ -42,12 +42,7 @@ const flatten = (
 
 const SectionLabel = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 mb-3 text-BR400">
-    <Typography
-      variant="c-m"
-      fontWeight="bold"
-      color="BR400"
-      className="uppercase tracking-[1.5px] text-xs"
-    >
+    <Typography variant="c-m" fontWeight="bold" className="uppercase  text-xs">
       {title}
     </Typography>
   </div>
@@ -71,12 +66,7 @@ const CategoryCard = ({
       <Layers size={20} className="text-BR400" />
     </div>
     <div className="flex-1 min-w-0">
-      <Typography
-        variant="p-m"
-        fontWeight="medium"
-        color="BR500"
-        className="truncate"
-      >
+      <Typography variant="p-m" fontWeight="medium" className="truncate">
         {name}
       </Typography>
       <Typography variant="p-s" color="N80" className="text-xs">
@@ -166,7 +156,9 @@ const CardSkeletonGrid = ({
 }) => (
   <div
     className={
-      cols ? "grid grid-cols-1 sm:grid-cols-2 gap-3" : "grid grid-cols-1 gap-2.5"
+      cols
+        ? "grid grid-cols-1 sm:grid-cols-2 gap-3"
+        : "grid grid-cols-1 gap-2.5"
     }
   >
     {Array.from({ length: count }).map((_, i) => (

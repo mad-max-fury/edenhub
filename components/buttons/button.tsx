@@ -51,7 +51,8 @@ const buttonVariants = cva(" transition-all ease-in-out duration-400", {
     {
       types: "outline",
       variant: "secondary",
-      className: "bg-transparent text-N70 border border-N40 text-N600",
+      className:
+        "bg-transparent text-N70 border border-N40 text-N600 hover:border-transparent hover:bg-N20 hover:text-N700",
     },
     {
       types: "outline",

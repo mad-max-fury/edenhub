@@ -142,17 +142,6 @@ const ShopPage = () => {
   const toggleSection = (key: string) =>
     setOpenSections((s) => ({ ...s, [key]: !s[key] }));
 
-  const [navH, setNavH] = useState(0);
-  useEffect(() => {
-    const measure = () => {
-      const nav = document.querySelector("nav");
-      setNavH(nav ? Math.round(nav.getBoundingClientRect().height) : 0);
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     const get = (k: string, fn: (v: string) => void) => {
@@ -361,7 +350,6 @@ const ShopPage = () => {
     </button>
   );
 
-  // ── Ad campaign view: the ad's info + its promoted products only ──────────
   if (adId) {
     const adProducts = ad?.products ?? [];
     return (
@@ -443,7 +431,6 @@ const ShopPage = () => {
     <>
       <GlobalMenu />
 
-      {/* Collection banner */}
       <section className="bg-white border-b border-N30">
         <div className="max-w-[1400px] mx-auto px-[clamp(16px,4vw,40px)] pt-6 pb-8">
           <nav className="flex items-center gap-1.5 text-xs text-N400 mb-4">
@@ -463,11 +450,7 @@ const ShopPage = () => {
         </div>
       </section>
 
-      {/* Sticky filter + sort bar */}
-      <div
-        className="sticky z-20 bg-white border-b border-N30"
-        style={{ top: navH }}
-      >
+      <div className="sticky top-[90px] z-20 bg-white border-b border-N30">
         <div className="max-w-[1400px] mx-auto px-[clamp(16px,4vw,40px)] py-3 flex items-center gap-4 justify-between">
           {/* Category pills (apply immediately) */}
           <div className="flex items-center gap-2 overflow-x-auto hideScrollBar">
