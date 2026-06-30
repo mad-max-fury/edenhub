@@ -59,7 +59,7 @@ export const GlobalMenu = () => {
           />
         </Link>
 
-        <div className="z-[-1] isolate flex items-center gap-2">
+        <div className="isolate flex items-center gap-2">
           <GlobalSearchDropdown />
           <UserDropDown user={me?.data} />
           <CartButton />

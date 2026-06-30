@@ -32,7 +32,6 @@ import {
 import type { TypographyColors } from "@/components/typography/types";
 import AccordionWrapper from "@/components/accordions/AccordionWrapper";
 import { ShopProductCard } from "@/app/shop/components/shopProductCard";
-import { LANDING_FAQS, LANDING_TESTIMONIALS } from "@/constants/data";
 import {
   useGetBestSellersQuery,
   useGetCatalogProductsQuery,
@@ -47,14 +46,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-
-type IsActiveFAQTabProps = "orders" | "payments" | "repairs";
-
-interface FAQTabsProps {
-  id: string;
-  name: string;
-  linkName: IsActiveFAQTabProps;
-}
 
 const HERO_SLIDES: HeroSlide[] = [
   {
@@ -126,7 +117,7 @@ const SectionHeading = ({
         <Typography
           fontWeight="medium"
           color={eyebrowColor}
-          className="uppercase tracking-[3px] text-xs"
+          className="uppercase tracking-[1px] text-xs"
         >
           {eyebrow}
         </Typography>
@@ -134,7 +125,7 @@ const SectionHeading = ({
       <Typography
         fontWeight="medium"
         color={titleColor}
-        className="text-3xl lg:text-4xl capitalize leading-tight"
+        className="text-3xl lg:text-4xl capitalize "
       >
         {title}
       </Typography>
@@ -146,7 +137,7 @@ const SectionHeading = ({
 const ViewAll = ({ children }: { children: React.ReactNode }) => (
   <Link
     href="/shop"
-    className="flex items-center gap-1.5 text-sm text-BR500 hover:text-BR400 transition-colors uppercase tracking-[1px]"
+    className="flex font-clashDisplay  items-center gap-1.5 text-sm text-BR500 hover:text-BR400 transition-colors uppercase tracking-[1px]"
   >
     {children}
     <ArrowRight size={15} />
@@ -251,7 +242,11 @@ export default function Home() {
     ) : products.length !== 0 ? (
       <div className={gridClass}>
         {products.map((product) => (
-          <ShopProductCard key={product._id} product={product} />
+          <ShopProductCard
+            key={product._id}
+            product={product}
+            variant="minimal"
+          />
         ))}
       </div>
     ) : (
@@ -262,13 +257,14 @@ export default function Home() {
       />
     );
 
-  const gridFour = "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5";
-  const gridThree = "grid grid-cols-2 md:grid-cols-3 gap-5";
+  const gridFour =
+    "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-3";
+  const gridThree = "grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-5";
 
   return (
     <main className="w-full max-w-[1440px] mx-auto">
       <HeroCarousel slides={heroSlides} />
-      <AssuranceStrip />
+      {/* <AssuranceStrip /> */}
       <section className="py-16 px-4 lg:px-10 bg-N0 flex flex-col gap-10">
         <SectionHeading
           eyebrow="Find your fit"
@@ -328,15 +324,25 @@ export default function Home() {
         <section className="bg-N10 px-4 lg:px-10 py-16 flex flex-col gap-6">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-xs text-N400 uppercase tracking-widest mb-1">In their words</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-N900">What Our Clients Say</h2>
+              <p className="text-xs text-N400 uppercase tracking-widest mb-1">
+                In their words
+              </p>
+              <h2 className="text-2xl md:text-3xl font-bold text-N900">
+                What Our Clients Say
+              </h2>
             </div>
-            <button onClick={() => setShowReviewForm(true)} className="text-sm text-BR500 hover:text-BR400 font-medium shrink-0">
+            <button
+              onClick={() => setShowReviewForm(true)}
+              className="text-sm text-BR500 hover:text-BR400 font-medium shrink-0"
+            >
               Write a review
             </button>
           </div>
           <TestimonialsCarousel items={testimonialItems} />
-          <ShopReviewForm open={showReviewForm} onClose={() => setShowReviewForm(false)} />
+          <ShopReviewForm
+            open={showReviewForm}
+            onClose={() => setShowReviewForm(false)}
+          />
         </section>
       )}
 
