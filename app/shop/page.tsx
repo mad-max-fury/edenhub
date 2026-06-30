@@ -331,8 +331,8 @@ const ShopPage = () => {
   const pillCls = (active: boolean) =>
     `shrink-0 text-xs px-4 py-2 rounded-full border transition-colors ${
       active
-        ? "bg-N900 text-white border-N900"
-        : "bg-white text-N600 border-N30 hover:border-N200"
+        ? "bg-BR500 text-white border-B500"
+        : "bg-white text-N600 border-N30 hover:border-BR400"
     }`;
 
   const sectionHeader = (label: string) => (
@@ -556,14 +556,14 @@ const ShopPage = () => {
       {/* Product grid */}
       <main className="max-w-[1400px] mx-auto px-[clamp(16px,4vw,40px)] py-10">
         {isFetching ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-8 mmd:gap-x-1 mmd:gap-y-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="aspect-[4/5] bg-N20 animate-pulse" />
             ))}
           </div>
         ) : products.length > 0 ? (
           <div className="flex flex-col gap-10">
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-8 mmd:gap-x-1 mmd:gap-y-6">
               {products.map((p) => (
                 <ShopProductCard key={p._id} product={p} />
               ))}
@@ -725,18 +725,18 @@ const ShopPage = () => {
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 -mx-4 px-4 py-3 bg-white border-t border-N30 flex items-center gap-3">
+        <div className="sticky bottom-[-16px] -mx-4 px-4 py-3 bg-white border-t border-N30 flex items-center gap-3">
           <button
             type="button"
             onClick={clearDraft}
-            className="flex-1 py-2.5 text-sm font-medium text-N600 border border-N30 rounded hover:border-N200 transition-colors"
+            className="flex-1 py-2.5 text-sm font-medium text-N600 border border-BR100 rounded hover:border-BR300 transition-colors"
           >
             Clear all
           </button>
           <button
             type="button"
             onClick={applyDraft}
-            className="flex-1 py-2.5 text-sm font-medium bg-N900 text-white rounded hover:bg-N800 transition-colors"
+            className="flex-1 py-2.5 text-sm font-medium bg-BR500 text-white rounded hover:bg-BR400 transition-colors"
           >
             Apply filters
           </button>
